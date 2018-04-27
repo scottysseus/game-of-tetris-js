@@ -1,5 +1,5 @@
-export default function MockBlockContent() {
-    let rotated = false;
+export default function MockBlockContent(arg) {
+    let rotated = arg != null ? arg : false;
 
     this.rotate = function() {
         rotated = true;

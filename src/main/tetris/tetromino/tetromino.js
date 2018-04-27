@@ -4,6 +4,14 @@ export default function Tetromino(args) {
 
     let {blocks} = args;
 
+    this.height = function() {
+        return blocks.length;
+    };
+
+    this.width = function() {
+        return blocks[0].length;
+    };
+
     let rotateBlocks = function(rotationalDirection) {
         let height = this.height();
         let width = this.width();
@@ -23,14 +31,6 @@ export default function Tetromino(args) {
                 blocks[row][col].rotate(rotationalDirection);
             }
         }
-    };
-
-    this.height = function() {
-        return blocks.length;
-    };
-
-    this.width = function() {
-        return blocks[0].length;
     };
 
     this.get = function(row, col) {
