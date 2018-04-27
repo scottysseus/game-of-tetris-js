@@ -1,13 +1,13 @@
-import RotationalDirection from "../direction/rotationalDirection"
+import {RotationalDirection} from "../direction/rotationalDirection"
 
-export function Tetromino(args) {
+export default function Tetromino(args) {
 
     let {blocks} = args;
 
     let rotateBlocks = function(rotationalDirection) {
         let height = this.height();
         let width = this.width();
-        let tempBlocks = Array(height).fill(Array(width));
+        let tempBlocks = Array(width).fill(Array(height));
         for(row = 0; row < height; ++row) {
             for(col = 0; col < width; ++col) {
                 index = this.getRotatedIndex(row, col, rotationalDirection, 1);
