@@ -1,0 +1,13 @@
+{
+    "name": "game-of-tetris",
+    "version": "1.0.0",
+    "description": "Tetris with a Game of Thrones flair",
+    "main": "src/main/index.js",
+    "repository": "https://github.com/scottyseus/game-of-tetris-js.git",
+    "author": "Scott Weidenkopf <sweidenkopf@gmail.com>",
+    "license": "MIT",
+    "private": false,
+    "scripts": {
+        "test": "jest"
+    }
+}
