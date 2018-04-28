@@ -5,13 +5,20 @@ export default function Block(args) {
         return content;
     };
 
-    this.rotate = function() {
+    this.rotate = function(rotationalDirection) {
         if(!this.isEmpty()) {
-            content.rotate();
+            content.rotate(rotationalDirection);
         }
     };
 
     this.isEmpty = function() {
         return content === null;
+    }
+
+    this.equals = function(other) {
+        if(other.getContent && other.getContent() === content) {
+            return true;
+        }
+        return false;
     }
 }

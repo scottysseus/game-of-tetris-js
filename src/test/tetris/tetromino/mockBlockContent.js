@@ -1,11 +1,24 @@
-export default function MockBlockContent(arg) {
-    let rotated = arg != null ? arg : false;
+import Orientation from "./orientation";
 
-    this.rotate = function() {
-        rotated = true;
+export default function MockBlockContent(args) {
+    let {content, orientation} = args;
+
+    this.rotate = function(rotationalDirection) {
+        orientation = Orientation.getRotatedOrientation(orientation, rotationalDirection);
     };
 
-    this.isRotated = function() {
-        return rotated;
+    this.getOrientation = function() {
+        return orientation;
+    }
+
+    this.getContent = function() {
+        return content;
+    }
+
+    this.equals = function(other) {
+        if(other.getContent && other.getContent() === content) {
+            return true;
+        }
+        return false;
     }
 }

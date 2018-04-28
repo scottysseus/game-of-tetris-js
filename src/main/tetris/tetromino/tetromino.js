@@ -1,4 +1,4 @@
-import {RotationalDirection} from "../direction/rotationalDirection"
+import RotationalDirection from "../direction/rotationalDirection"
 
 export default function Tetromino(args) {
 
@@ -16,22 +16,35 @@ export default function Tetromino(args) {
         let height = this.height();
         let width = this.width();
         let tempBlocks = Array(width).fill(Array(height));
-        for(row = 0; row < height; ++row) {
-            for(col = 0; col < width; ++col) {
-                index = this.getRotatedIndex(row, col, rotationalDirection, 1);
+        for(let row = 0; row < height; ++row) {
+            for(let col = 0; col < width; ++col) {
+                let index = this.getRotatedIndex(row, col, rotationalDirection, 1);
                 tempBlocks[index[0]][index[1]] = blocks[row][col];
             }
         }
         return tempBlocks;
-    };
+    }.bind(this);
 
     let rotateEachBlock = function(blocks, rotationalDirection) {
-        for(row = 0; row < this.height(); ++row) {
-            for(col = 0; col < this.width(); ++col) {
-                blocks[row][col].rotate(rotationalDirection);
+        for(let row = 0; row < blocks.length; ++row) {
+            for(let col = 0; col < blocks[0].length; ++col) {
+                if(!blocks[row][col].isEmpty()) {
+                    blocks[row][col].rotate(rotationalDirection);
+                }
             }
         }
-    };
+    }.bind(this);
+
+    let compareBlocks = function(otherBlocks) {
+        for(let row = 0; row < this.height(); ++row) {
+            for(let col = 0; col < this.width(); ++col) {
+                if(!blocks[row][col].equals(otherBlocks[row][col])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }.bind(this);
 
     this.get = function(row, col) {
         if(this.contains(row, col)) {
@@ -52,14 +65,14 @@ export default function Tetromino(args) {
     this.getRotatedIndex = function(row, col, rotationalDirection, numRotations) {
         let newRow = row;
         let newCol = col;
-        for(i = 0; i < numRotations; ++i) {
+        for(let i = 0; i < numRotations; ++i) {
             let oldRow = newRow;
             let oldCol = newCol;
             if(rotationalDirection = RotationalDirection.CLOCKWISE) {
                 newRow = oldCol;
-                newCol = height - 1 - oldRow;
+                newCol = this.height() - 1 - oldRow;
             } else {
-                newRow = width - 1 - oldCol;
+                newRow = this.width() - 1 - oldCol;
                 newCol = oldRow;
             }
         }
@@ -72,5 +85,20 @@ export default function Tetromino(args) {
         }
         return true;
     };
+
+    this.getBlocks = function() {
+        return blocks;
+    }
+
+    this.equals = function(other) {
+        if(other.height && other.width && other.getBlocks) {
+            let otherBlocks = other.getBlocks();
+            if(other.height() === this.height() || other.width() === this.width() ||
+            compareBlocks(other.getBlocks())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
