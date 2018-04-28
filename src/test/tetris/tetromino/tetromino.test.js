@@ -28,17 +28,17 @@ test('empty block grid returns 0 for width and height', () => {
 
 test('comparing different-sized tetrominos returns false', () => {
     let tetrominoA = new Tetromino({blocks: [
-        [new Block({content: [0,0]}), new Block({content: [0,1]})]
+        [new Block({content: "[0,0]"}), new Block({content: "[0,1]"})]
     ]});
 
     let tetrominoB = new Tetromino({blocks: []});
     let tetrominoC = new Tetromino({blocks: [
-        [new Block({content: [0,0]})],
-        [new Block({content: [1,0]})]
+        [new Block({content: "[0,0]"})],
+        [new Block({content: "[1,0]"})]
     ]});
     let tetrominoD = new Tetromino({blocks: [
-        [new Block({content: [0,0]}), new Block({content: [0,1]})],
-        [new Block({content: [1,0]}), new Block({content: [1,1]})]
+        [new Block({content: "[0,0]"}), new Block({content: "[0,1]"})],
+        [new Block({content: "[1,0]"}), new Block({content: "[1,1]"})]
     ]});
 
     expect(tetrominoA.equals(tetrominoB)).toBe(false);
@@ -48,11 +48,11 @@ test('comparing different-sized tetrominos returns false', () => {
 
 test('comparing tetrominos with equivalent blocks returns true', () => {
     let tetrominoA = new Tetromino({blocks: [
-        [new Block({content: [0,0]}), new Block({content: [0,1]})]
+        [new Block({content: "[0,0]"}), new Block({content: "[0,1]"})]
     ]});
 
     let tetrominoB = new Tetromino({blocks: [
-        [new Block({content: [0,0]}), new Block({content: [0,1]})]
+        [new Block({content: "[0,0]"}), new Block({content: "[0,1]"})]
     ]});
 
     expect(tetrominoA.equals(tetrominoB)).toBe(true);

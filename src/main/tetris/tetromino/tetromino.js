@@ -34,7 +34,7 @@ export default function Tetromino(args) {
         for(let i = 0; i < numRotations; ++i) {
             let oldRow = newRow;
             let oldCol = newCol;
-            if(rotationalDirection = RotationalDirection.CLOCKWISE) {
+            if(rotationalDirection === RotationalDirection.CLOCKWISE) {
                 newRow = oldCol;
                 newCol = this.height() - 1 - oldRow;
             } else {
