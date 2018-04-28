@@ -16,7 +16,8 @@ export default function Block(args) {
     }
 
     this.equals = function(other) {
-        if(other.getContent && other.getContent() === content) {
+        if(other.getContent && (other.getContent() === content || 
+        (content.equals && content.equals(other.getContent())))) {
             return true;
         }
         return false;

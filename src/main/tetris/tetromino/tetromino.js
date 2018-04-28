@@ -9,42 +9,8 @@ export default function Tetromino(args) {
     };
 
     this.width = function() {
-        return blocks[0].length;
+        return blocks[0] ?  blocks[0].length : 0;
     };
-
-    let rotateBlocks = function(rotationalDirection) {
-        let height = this.height();
-        let width = this.width();
-        let tempBlocks = Array(width).fill(Array(height));
-        for(let row = 0; row < height; ++row) {
-            for(let col = 0; col < width; ++col) {
-                let index = this.getRotatedIndex(row, col, rotationalDirection, 1);
-                tempBlocks[index[0]][index[1]] = blocks[row][col];
-            }
-        }
-        return tempBlocks;
-    }.bind(this);
-
-    let rotateEachBlock = function(blocks, rotationalDirection) {
-        for(let row = 0; row < blocks.length; ++row) {
-            for(let col = 0; col < blocks[0].length; ++col) {
-                if(!blocks[row][col].isEmpty()) {
-                    blocks[row][col].rotate(rotationalDirection);
-                }
-            }
-        }
-    }.bind(this);
-
-    let compareBlocks = function(otherBlocks) {
-        for(let row = 0; row < this.height(); ++row) {
-            for(let col = 0; col < this.width(); ++col) {
-                if(!blocks[row][col].equals(otherBlocks[row][col])) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }.bind(this);
 
     this.get = function(row, col) {
         if(this.contains(row, col)) {
@@ -88,17 +54,51 @@ export default function Tetromino(args) {
 
     this.getBlocks = function() {
         return blocks;
-    }
+    };
 
     this.equals = function(other) {
         if(other.height && other.width && other.getBlocks) {
             let otherBlocks = other.getBlocks();
-            if(other.height() === this.height() || other.width() === this.width() ||
-            compareBlocks(other.getBlocks())) {
+            if(other.height() === this.height() && other.width() === this.width() &&
+            compareBlocks(otherBlocks)) {
                 return true;
             }
         }
         return false;
-    }
+    };
+
+    let rotateBlocks = function(rotationalDirection) {
+        let height = this.height();
+        let width = this.width();
+        let tempBlocks = Array(width).fill(Array(height));
+        for(let row = 0; row < height; ++row) {
+            for(let col = 0; col < width; ++col) {
+                let index = this.getRotatedIndex(row, col, rotationalDirection, 1);
+                tempBlocks[index[0]][index[1]] = blocks[row][col];
+            }
+        }
+        return tempBlocks;
+    }.bind(this);
+
+    let rotateEachBlock = function(blocks, rotationalDirection) {
+        for(let row = 0; row < blocks.length; ++row) {
+            for(let col = 0; col < blocks[0].length; ++col) {
+                if(!blocks[row][col].isEmpty()) {
+                    blocks[row][col].rotate(rotationalDirection);
+                }
+            }
+        }
+    }.bind(this);
+
+    let compareBlocks = function(otherBlocks) {
+        for(let row = 0; row < this.height(); ++row) {
+            for(let col = 0; col < this.width(); ++col) {
+                if(!blocks[row][col].equals(otherBlocks[row][col])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }.bind(this);
 
 }
