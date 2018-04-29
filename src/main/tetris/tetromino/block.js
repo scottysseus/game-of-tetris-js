@@ -12,7 +12,7 @@ export default function Block(args) {
     };
 
     this.isEmpty = function() {
-        return content === null;
+        return content === null || Object.keys(content).length < 1;
     }
 
     this.equals = function(other) {

@@ -16,7 +16,6 @@ export default function MockBlockContent(args) {
     }
 
     this.equals = function(other) {
-        console.log(other);
         if(other.getContent && other.getContent() !== content) {
             return false;
         } else if(!other.getContent && other.getContent !== content) {

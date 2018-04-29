@@ -70,10 +70,15 @@ export default function Tetromino(args) {
     let rotateBlocks = function(rotationalDirection) {
         let height = this.height();
         let width = this.width();
-        let tempBlocks = Array(width).fill(Array(height));
+        let tempBlocks = new Array(width).fill(new Array(height));
         for(let row = 0; row < height; ++row) {
             for(let col = 0; col < width; ++col) {
                 let index = this.getRotatedIndex(row, col, rotationalDirection, 1);
+                // for some reason, this is setting the entire column to blocks[row][col]
+                // and not just the single cell...
+                // what the FUCKKK
+                // tempBlocks[index[0]][index[1]] = blocks[row][col];
+                tempBlocks[index[0]][index[1]] = 1;
                 tempBlocks[index[0]][index[1]] = blocks[row][col];
             }
         }

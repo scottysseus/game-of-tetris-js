@@ -3,13 +3,24 @@ import RotationalDirection from "../../../main/tetris/direction/rotationalDirect
 import MockBlockContent from "./mockBlockContent";
 import Block from "../../../main/tetris/tetromino/block";
 import MockTetrominoFactory from "./mockTetrominoFactory";
+import rotationalDirection from "../../../main/tetris/direction/rotationalDirection";
 
-test('can predict rotated index of a block for 1 rotation', () =>{
+test('can predict rotated index of a block', () =>{
     let tetromino = MockTetrominoFactory.getMockJ().getTetromino();
-    let predictedIndex = tetromino.getRotatedIndex(0,0,);
+    let predictedIndex = tetromino.getRotatedIndex(0,0,RotationalDirection.CLOCKWISE,1);
+    expect(predictedIndex[0]).toBe(0);
+    expect(predictedIndex[1]).toBe(2);
+
+    predictedIndex = tetromino.getRotatedIndex(2,0,RotationalDirection.CLOCKWISE,1);
+    expect(predictedIndex[0]).toBe(0);
+    expect(predictedIndex[1]).toBe(0);
+
+    predictedIndex = tetromino.getRotatedIndex(2,1,RotationalDirection.COUNTERCLOCKWISE,1);
+    expect(predictedIndex[0]).toBe(0);
+    expect(predictedIndex[1]).toBe(2);
 });
 
-test('can rotate block clockwise', () => {
+test.only('can rotate block clockwise', () => {
     MockTetrominoFactory.getAllMocks().forEach(mockTetromino => {
         let rotatedTetromino = mockTetromino.getTetromino();
         rotatedTetromino.rotate(RotationalDirection.CLOCKWISE);
