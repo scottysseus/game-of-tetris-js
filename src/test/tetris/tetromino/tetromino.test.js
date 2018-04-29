@@ -4,6 +4,11 @@ import MockBlockContent from "./mockBlockContent";
 import Block from "../../../main/tetris/tetromino/block";
 import MockTetrominoFactory from "./mockTetrominoFactory";
 
+test('can predict rotated index of a block for 1 rotation', () =>{
+    let tetromino = MockTetrominoFactory.getMockJ().getTetromino();
+    let predictedIndex = tetromino.getRotatedIndex(0,0,);
+});
+
 test('can rotate block clockwise', () => {
     MockTetrominoFactory.getAllMocks().forEach(mockTetromino => {
         let rotatedTetromino = mockTetromino.getTetromino();
