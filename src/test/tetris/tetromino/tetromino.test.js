@@ -20,7 +20,7 @@ test('can predict rotated index of a block', () =>{
     expect(predictedIndex[1]).toBe(2);
 });
 
-test.only('can rotate block clockwise', () => {
+test('can rotate block clockwise', () => {
     MockTetrominoFactory.getAllMocks().forEach(mockTetromino => {
         let rotatedTetromino = mockTetromino.getTetromino();
         rotatedTetromino.rotate(RotationalDirection.CLOCKWISE);

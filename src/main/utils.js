@@ -5,3 +5,9 @@ export function arrayEquals(a1, a2) {
     }
     return true
 };
+
+export function createMatrix(height, width) {
+    var a = [], b;
+    while (a.push(b = []) < height) while (b.push(null) < width);
+    return a;
+}

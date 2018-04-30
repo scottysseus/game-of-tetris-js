@@ -12,6 +12,6 @@ export default Object.freeze({
     THREE: threeSymbol,
     getRotatedOrientation: function(orientation, rotationalDirection) {
         let props = RotationalDirection.properties[rotationalDirection];
-        return orientation + props.multiplier % 4;
+        return (orientation + props.multiplier + 4) % 4;
     }
 });

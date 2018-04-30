@@ -16,9 +16,7 @@ export default function MockBlockContent(args) {
     }
 
     this.equals = function(other) {
-        if(other.getContent && other.getContent() !== content) {
-            return false;
-        } else if(!other.getContent && other.getContent !== content) {
+        if(other.getContent() !== content || other.getOrientation() !== orientation) {
             return false;
         }
         return true;
