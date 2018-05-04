@@ -4,6 +4,19 @@ import MockTetromino from "./mockTetromino";
 import Tetromino from "../../../main/tetris/tetromino/tetromino";
 import Block from "../../../main/tetris/tetromino/block";
 import Orientation from "./orientation";
+import BlockCollection from "../../../main/tetris/blockCollection";
+
+let getNewMockTetromino = function(blocks, clockwiseBlocks, counterclockwiseBlocks) {
+    let blockCollection = new BlockCollection({blocks:blocks});
+    let clockwiseBlockCollection = new BlockCollection({blocks: clockwiseBlocks});
+    let counterclockwiseBlockCollection = new BlockCollection({blocks: counterclockwiseBlocks});
+
+    return new MockTetromino({
+        tetromino: new Tetromino({blockCollection: blockCollection}),
+        clockwise: new Tetromino({blockCollection: clockwiseBlockCollection}),
+        counterclockwise: new Tetromino({blockCollection: counterclockwiseBlockCollection})
+    });
+}
 
 let getMockI = function() {
     let blocks = [[
@@ -29,11 +42,8 @@ let getMockI = function() {
         new Block({content: new MockBlockContent({content: "[2,0]", orientation: Orientation.NINE})}),
         new Block({content: new MockBlockContent({content: "[3,0]", orientation: Orientation.NINE})})
     ]];
-    return new MockTetromino({
-        tetromino: new Tetromino({blocks: blocks}),
-        clockwise: new Tetromino({blocks: clockwiseBlocks}),
-        counterclockwise: new Tetromino({blocks: counterclockwiseBlocks})
-    });
+
+    return getNewMockTetromino(blocks, clockwiseBlocks, counterclockwiseBlocks);
 };
 
 let getMockJ = function() {
@@ -66,11 +76,7 @@ let getMockJ = function() {
         new Block({content: new MockBlockContent({content: "[2,0]", orientation: Orientation.NINE})})
     ]];
 
-    return new MockTetromino({
-        tetromino: new Tetromino({blocks: blocks}),
-        clockwise: new Tetromino({blocks: clockwiseBlocks}),
-        counterclockwise: new Tetromino({blocks: counterclockwiseBlocks})
-    });
+    return getNewMockTetromino(blocks, clockwiseBlocks, counterclockwiseBlocks);
 };
 
 let getMockO = function() {
@@ -98,11 +104,7 @@ let getMockO = function() {
         new Block({content: new MockBlockContent({content: "[1,0]", orientation: Orientation.NINE})})
     ]];
 
-    return new MockTetromino({
-        tetromino: new Tetromino({blocks: blocks}),
-        clockwise: new Tetromino({blocks: clockwiseBlocks}),
-        counterclockwise: new Tetromino({blocks: counterclockwiseBlocks})
-    });
+    return getNewMockTetromino(blocks, clockwiseBlocks, counterclockwiseBlocks);
 };
 
 let getMockS = function() {
@@ -138,11 +140,7 @@ let getMockS = function() {
         new Block({content: new MockBlockContent({content: "[1,0]", orientation: Orientation.NINE})}),
     ]];
 
-    return new MockTetromino({
-        tetromino: new Tetromino({blocks: blocks}),
-        clockwise: new Tetromino({blocks: clockwiseBlocks}),
-        counterclockwise: new Tetromino({blocks: counterclockwiseBlocks})
-    });
+    return getNewMockTetromino(blocks, clockwiseBlocks, counterclockwiseBlocks);
 };
 
 let getMockT = function() {
@@ -178,11 +176,7 @@ let getMockT = function() {
         new Block({content: null})
     ]];
 
-    return new MockTetromino({
-        tetromino: new Tetromino({blocks: blocks}),
-        clockwise: new Tetromino({blocks: clockwiseBlocks}),
-        counterclockwise: new Tetromino({blocks: counterclockwiseBlocks})
-    });
+    return getNewMockTetromino(blocks, clockwiseBlocks, counterclockwiseBlocks);
 };
 
 let getAllMocks = function() {

@@ -1,8 +1,14 @@
 export default function Well(args) {
-    let {grid, activeTetromino, activeRow, activeCol} = args;
+    let {grid, activeTetromino = null, activeRow = 0, activeCol = 0} = args;
 
     this.throwTetromino = function(tetromino) {
 
+    };
+
+    this.get = function(row, col) {
+        if(this.contains(row, col)) {
+            return blocks[row][col];
+        }
     };
 
     this.getGrid = function() {
