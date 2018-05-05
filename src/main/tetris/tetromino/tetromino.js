@@ -12,13 +12,10 @@ export default function Tetromino(args) {
         blockCollection = new BlockCollection({blocks: tempBlocks});
     };
 
-    this.height = function() {
-        return blockCollection.height();
-    }
-
-    this.width = function() {
-        return blockCollection.width();
-    }
+    this.height = blockCollection.width;
+    this.width = blockCollection.width;
+    this.contains = blockCollection.contains;
+    this.get = blockCollection.get;
 
     this.getRotatedIndex = function(row, col, rotationalDirection, numRotations) {
         let newRow = row;

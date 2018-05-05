@@ -15,6 +15,12 @@ export default function BlockCollection(args) {
         }
     };
 
+    this.set = function(row, col, block) {
+        if(this.contains(row, col)) {
+            blocks[row][col] = block;
+        }
+    };
+
     this.contains = function(row, col) {
         return row < this.height() && col < this.width() && row >= 0 && col >= 0;
     };

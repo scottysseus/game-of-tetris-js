@@ -1,26 +1,36 @@
 export default function Well(args) {
-    let {grid, activeTetromino = null, activeRow = 0, activeCol = 0} = args;
+    let {grid} = args;
+    let activeTetromino = null;
+    let activeRow = null;
+    let activeCol = null;
+
+    this.height = grid.width;
+    this.width = grid.width;
+    this.contains = grid.contains;
+    this.get = grid.get;
 
     this.throwTetromino = function(tetromino) {
+        activeTetromino = tetromino;
+        activeRow = 0;
+        activeCol = getCenteredColumn(tetromino.width());
 
-    };
-
-    this.get = function(row, col) {
-        if(this.contains(row, col)) {
-            return blocks[row][col];
-        }
+        this.refreshActiveTetromino();
     };
 
     this.getGrid = function() {
         return grid;
     };
 
-    this.height = function() {
-        return grid.length;
-    };
-    
-    this.width = function() {
-        return grid[0] ? grid[0].length : 0;
+    this.refreshActiveTetromino = function() {
+        for(let row = 0; row < activeTetromino.height(); ++row) {
+            for(let col = 0; col < activeTetromino.width(); ++col) {
+                let newRow = activeRow + row;
+                let newCol = activeCol + col;
+                if(!activeTetromino.isEmptyBlock(row, col)) {
+                    grid.set(newRow,newCol,activeTetromino.get(row, col));
+                }
+            } 
+        }
     };
 
     this.equals = function(other) {
@@ -43,5 +53,9 @@ export default function Well(args) {
             }
         }
         return true;
+    }.bind(this);
+
+    let getCenteredColumn = function(width) {
+        return grid.width() / 2 - width / 2;
     }.bind(this);
 };
