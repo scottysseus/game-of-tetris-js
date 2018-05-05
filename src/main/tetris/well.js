@@ -4,7 +4,7 @@ export default function Well(args) {
     let activeRow = null;
     let activeCol = null;
 
-    this.height = grid.width;
+    this.height = grid.height;
     this.width = grid.width;
     this.contains = grid.contains;
     this.get = grid.get;
@@ -12,7 +12,7 @@ export default function Well(args) {
     this.throwTetromino = function(tetromino) {
         activeTetromino = tetromino;
         activeRow = 0;
-        activeCol = getCenteredColumn(tetromino.width());
+        activeCol = this.getCenteredColumn(tetromino.width());
 
         this.refreshActiveTetromino();
     };
@@ -31,6 +31,10 @@ export default function Well(args) {
                 }
             } 
         }
+    };
+
+    this.lowerActiveTetromino = function() {
+
     };
 
     this.equals = function(other) {
@@ -55,7 +59,7 @@ export default function Well(args) {
         return true;
     }.bind(this);
 
-    let getCenteredColumn = function(width) {
-        return grid.width() / 2 - width / 2;
-    }.bind(this);
+    this.getCenteredColumn = function(width) {
+        return Math.floor((grid.width() / 2) - (width / 2));
+    };
 };

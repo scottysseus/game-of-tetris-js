@@ -25,8 +25,16 @@ export default function BlockCollection(args) {
         return row < this.height() && col < this.width() && row >= 0 && col >= 0;
     };
 
+    this.isEmptyBlock = function(row, col) {
+        if(this.contains(row, col) && this.get(row, col) !== null) {
+            let block = this.get(row, col);
+            return block.isEmpty();
+        }
+        return true;
+    };
+
     this.equals = function(other) {
-        if(!other.get || !other.height || !other.width) {
+        if(!other.get || !other.height || !other.width || !other.isEmptyBlock) {
             return false;
         }
 
@@ -36,8 +44,16 @@ export default function BlockCollection(args) {
 
         for(let row = 0; row < this.height(); ++row) {
             for(let col = 0; col < this.width(); ++col) {
-                if(!blocks[row][col].equals(other.get(row,col))) {
-                    return false;
+                if(this.isEmptyBlock(row, col)) {
+                    if(!other.isEmptyBlock(row, col)) {
+                        return false;
+                    }
+                } else {
+                    let thisBlock = blocks[row][col];
+                    let otherBlock = other.get(row,col);
+                    if(!thisBlock.equals(otherBlock)) {
+                        return false;
+                    }
                 }
             }
         }

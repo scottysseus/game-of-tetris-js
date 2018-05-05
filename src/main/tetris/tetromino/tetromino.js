@@ -12,10 +12,11 @@ export default function Tetromino(args) {
         blockCollection = new BlockCollection({blocks: tempBlocks});
     };
 
-    this.height = blockCollection.width;
+    this.height = blockCollection.height;
     this.width = blockCollection.width;
     this.contains = blockCollection.contains;
     this.get = blockCollection.get;
+    this.isEmptyBlock = blockCollection.isEmptyBlock;
 
     this.getRotatedIndex = function(row, col, rotationalDirection, numRotations) {
         let newRow = row;
@@ -32,13 +33,6 @@ export default function Tetromino(args) {
             }
         }
         return [newRow, newCol];
-    };
-
-    this.isEmptyBlock = function(row, col) {
-        if(blockCollection.contains(row, col)) {
-            return blockCollection.get(row, col).isEmpty();
-        }
-        return true;
     };
 
     this.getBlockCollection = function() {
@@ -68,7 +62,8 @@ export default function Tetromino(args) {
     let rotateEachBlock = function(blocks, rotationalDirection) {
         for(let row = 0; row < blocks.length; ++row) {
             for(let col = 0; col < blocks[0].length; ++col) {
-                if(!blocks[row][col].isEmpty()) {
+                let block = blocks[row][col];
+                if(block !== null && !block.isEmpty()) {
                     blocks[row][col].rotate(rotationalDirection);
                 }
             }
