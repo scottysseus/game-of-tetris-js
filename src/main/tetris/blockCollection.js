@@ -9,6 +9,14 @@ export default function BlockCollection(args) {
         return blocks[0] ?  blocks[0].length : 0;
     };
 
+    this.columnInBounds = function(col) {
+        return col >= 0 && col < this.width()
+    };
+
+    this.rowInBounds = function(row) {
+        return row >= 0 && row < this.height();
+    }
+
     this.get = function(row, col) {
         if(this.contains(row, col)) {
             return blocks[row][col];

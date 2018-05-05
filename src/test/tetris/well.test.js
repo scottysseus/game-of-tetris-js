@@ -3,6 +3,7 @@ import MockTetrominoFactory from "./tetromino/mockTetrominoFactory";
 import mockTetrominoFactory from "./tetromino/mockTetrominoFactory";
 import Well from "../../main/tetris/well";
 import BlockCollection from "../../main/tetris/blockCollection";
+import HorizontalDirection from "../../main/tetris/direction/horizontalDirection";
 
 test('throw tetromino places a tetromino at the top-center of the grid', () => {
     let mockTetrominos = mockTetrominoFactory.getAllMocks();
@@ -24,6 +25,18 @@ test('lowering active tetromino in an empty well works', () => {
         well.lowerActiveTetromino();
         let middleIndex = well.getCenteredColumn(tetromino.width());
         expect(verifyTetrominoInGrid(well, tetromino, 1, middleIndex)).toBe(true);
+    });
+});
+
+test('shifting active tetromino in empty well works', () => {
+    let mockTetrominos = mockTetrominoFactory.getAllMocks();
+    mockTetrominos.forEach(mockTetromino => {
+        let well = new Well({grid: new BlockCollection({blocks: createMatrix(10,10)})});
+        let tetromino = mockTetromino.getTetromino();
+        well.throwTetromino(tetromino);
+        well.shiftActiveTetromino(HorizontalDirection.LEFT);
+        let middleIndex = well.getCenteredColumn(tetromino.width());
+        expect(verifyTetrominoInGrid(well, tetromino, 0, middleIndex - 1)).toBe(true);
     });
 });
 

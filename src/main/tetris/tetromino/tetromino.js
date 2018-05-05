@@ -70,6 +70,4 @@ export default function Tetromino(args) {
         }
     }.bind(this);
 
-    
-
 }
