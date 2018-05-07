@@ -34,9 +34,9 @@ export default function BlockCollection(args) {
     };
 
     this.isEmptyBlock = function(row, col) {
-        if(this.contains(row, col) && this.get(row, col) !== null) {
+        if(this.contains(row, col)) {
             let block = this.get(row, col);
-            return block.isEmpty();
+            return block === undefined || block === null || block.isEmpty();
         }
         return true;
     };
