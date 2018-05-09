@@ -10645,61 +10645,49 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var createGame = function createGame() {
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Game = function (_Phaser$Game) {
-  _inherits(Game, _Phaser$Game);
-
-  function Game() {
-    _classCallCheck(this, Game);
+    var game = Object.create(new _phaser2.default.Game());
 
     var docElement = document.documentElement;
     var width = docElement.clientWidth > _config2.default.gameWidth ? _config2.default.gameWidth : docElement.clientWidth;
     var height = docElement.clientHeight > _config2.default.gameHeight ? _config2.default.gameHeight : docElement.clientHeight;
 
-    var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, width, height, _phaser2.default.CANVAS, 'content', null));
+    game.state.add('Boot', _Boot2.default, false);
+    game.state.add('Splash', _Splash2.default, false);
+    game.state.add('Game', _Game2.default, false);
 
-    _this.state.add('Boot', _Boot2.default, false);
-    _this.state.add('Splash', _Splash2.default, false);
-    _this.state.add('Game', _Game2.default, false);
-
-    // with Cordova with need to wait that the device is ready so we will call the Boot state in another file
+    // with Cordova, need to wait that the device is ready so we will call the Boot state in another file
     if (!window.cordova) {
-      _this.state.start('Boot');
+        game.state.start('Boot');
     }
-    return _this;
-  }
 
-  return Game;
-}(_phaser2.default.Game);
+    return game;
+};
 
-window.game = new Game();
+window.game = createGame();
 
 if (window.cordova) {
-  var app = {
-    initialize: function initialize() {
-      document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-    },
+    var app = {
+        initialize: function initialize() {
+            document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+        },
 
-    // deviceready Event Handler
-    //
-    onDeviceReady: function onDeviceReady() {
-      this.receivedEvent('deviceready');
+        // deviceready Event Handler
+        //
+        onDeviceReady: function onDeviceReady() {
+            this.receivedEvent('deviceready');
 
-      // When the device is ready, start Phaser Boot state.
-      window.game.state.start('Boot');
-    },
+            // When the device is ready, start Phaser Boot state.
+            window.game.state.start('Boot');
+        },
 
-    receivedEvent: function receivedEvent(id) {
-      console.log('Received Event: ' + id);
-    }
-  };
+        receivedEvent: function receivedEvent(id) {
+            console.log('Received Event: ' + id);
+        }
+    };
 
-  app.initialize();
+    app.initialize();
 }
 
 /***/ }),
