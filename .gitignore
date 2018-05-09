@@ -1,5 +1,5 @@
 # build directory
-public/
+build/
 
 # Logs
 logs
