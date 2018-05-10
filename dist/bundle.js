@@ -10887,7 +10887,9 @@ function Game() {
     var gameState = Object.create(new _phaser2.default.State());
 
     gameState.create = function () {
-        gameState.add.image(0, 0, 'background').setOrigin(0, 0);
+        gameState.add.sprite(0, 0, 'background');
+        gameState.scale.fullScreenScaleMode = _phaser2.default.ScaleManager.SHOW_ALL;
+        gameState.load.start();
     };
 
     gameState.render = function () {};

@@ -6,7 +6,10 @@ export default function Game() {
     let gameState = Object.create(new Phaser.State());
 
     gameState.create = function() {    
-        gameState.add.tileSprite();
+        gameState.add.sprite(0, 0, 'background');
+        gameState.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+        gameState.load.start();
+
     };
 
     gameState.render = function() {

@@ -176,7 +176,7 @@ g,0<d.length&&(d=za[d[0]])&&(a.c[e]=d))}a.c[e]||(d=za[e])&&(a.c[e]=d);for(d=0;d<
 *
 * Phaser - http://phaser.io
 *
-* v2.10.4 "2018-05-03" - Built: Thu May 03 2018 15:48:14
+* v2.10.5 "2018-05-08" - Built: Tue May 08 2018 12:21:48
 *
 * By Richard Davey http://www.photonstorm.com @photonstorm
 *
@@ -21392,7 +21392,7 @@ World.prototype.raycast = function(result, ray){
 *
 * Phaser - http://phaser.io
 *
-* v2.10.4 "2018-05-03" - Built: Thu May 03 2018 15:48:04
+* v2.10.5 "2018-05-08" - Built: Tue May 08 2018 12:21:40
 *
 * By Richard Davey http://www.photonstorm.com @photonstorm
 *
@@ -21438,7 +21438,7 @@ var Phaser = Phaser || {    // jshint ignore:line
     * @constant Phaser.VERSION
     * @type {string}
     */
-    VERSION: '2.10.4',
+    VERSION: '2.10.5',
 
     /**
     * An array of Phaser game instances.
@@ -80725,6 +80725,12 @@ Phaser.SoundManager = function (game) {
     */
     this._watchContext = null;
 
+    /**
+    * @property {function} _resumeWebAudioOnClick - Bound 'click' handler. Added in boot(), if necessary.
+    * @private
+    */
+    this._resumeWebAudioOnClick = this._resumeWebAudioOnClick.bind(this);
+
 };
 
 Phaser.SoundManager.prototype = {
@@ -80822,7 +80828,7 @@ Phaser.SoundManager.prototype = {
             // In that case the input handler will do nothing, which is fine.
             if (this.context.state === 'suspended')
             {
-                this.game.input.onUp.addOnce(this.resumeWebAudio, this);
+                this.game.canvas.addEventListener('click', this._resumeWebAudioOnClick);
             }
         }
 
@@ -81352,6 +81358,8 @@ Phaser.SoundManager.prototype = {
 
         this.onSoundDecode.dispose();
 
+        this.game.canvas.removeEventListener('click', this._resumeWebAudioOnClick);
+
         if (this.context)
         {
             if (window.PhaserGlobal)
@@ -81368,6 +81376,12 @@ Phaser.SoundManager.prototype = {
             }
         }
 
+    },
+
+    _resumeWebAudioOnClick: function () {
+        this.resumeWebAudio();
+
+        this.game.canvas.removeEventListener('click', this._resumeWebAudioOnClick);
     }
 
 };
