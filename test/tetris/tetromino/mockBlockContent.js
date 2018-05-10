@@ -2,23 +2,26 @@ import Orientation from "./orientation";
 
 export default function MockBlockContent(args) {
     let {content, orientation} = args;
+    let mockBlockContentObj = {}
 
-    this.rotate = function(rotationalDirection) {
+    mockBlockContentObj.rotate = function(rotationalDirection) {
         orientation = Orientation.getRotatedOrientation(orientation, rotationalDirection);
     };
 
-    this.getOrientation = function() {
+    mockBlockContentObj.getOrientation = function() {
         return orientation;
-    }
+    };
 
-    this.getContent = function() {
+    mockBlockContentObj.getContent = function() {
         return content;
-    }
+    };
 
-    this.equals = function(other) {
+    mockBlockContentObj.equals = function(other) {
         if(other.getContent() !== content || other.getOrientation() !== orientation) {
             return false;
         }
         return true;
-    }
+    };
+
+    return mockBlockContentObj;
 }

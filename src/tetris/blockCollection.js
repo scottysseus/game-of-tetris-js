@@ -1,58 +1,63 @@
 export default function BlockCollection(args) {
     let {blocks} = args;
+    let blockCollectionObj = {};
     
-    this.height = function() {
+    blockCollectionObj.height = function() {
         return blocks.length;
     };
 
-    this.width = function() {
+    blockCollectionObj.width = function() {
         return blocks[0] ?  blocks[0].length : 0;
     };
 
-    this.columnInBounds = function(col) {
-        return col >= 0 && col < this.width()
+    blockCollectionObj.columnInBounds = function(col) {
+        return col >= 0 && col < blockCollectionObj.width()
     };
 
-    this.rowInBounds = function(row) {
-        return row >= 0 && row < this.height();
+    blockCollectionObj.rowInBounds = function(row) {
+        return row >= 0 && row < blockCollectionObj.height();
     }
 
-    this.get = function(row, col) {
-        if(this.contains(row, col)) {
+    blockCollectionObj.get = function(row, col) {
+        if(blockCollectionObj.contains(row, col)) {
             return blocks[row][col];
         }
     };
 
-    this.set = function(row, col, block) {
-        if(this.contains(row, col)) {
+    blockCollectionObj.set = function(row, col, block) {
+        if(blockCollectionObj.contains(row, col)) {
             blocks[row][col] = block;
         }
     };
 
-    this.contains = function(row, col) {
-        return row < this.height() && col < this.width() && row >= 0 && col >= 0;
+    blockCollectionObj.setAll = function(newBlocks) {
+        blocks = newBlocks;
     };
 
-    this.isEmptyBlock = function(row, col) {
-        if(this.contains(row, col)) {
-            let block = this.get(row, col);
+    blockCollectionObj.contains = function(row, col) {
+        return row < blockCollectionObj.height() && col < blockCollectionObj.width() && row >= 0 && col >= 0;
+    };
+
+    blockCollectionObj.isEmptyBlock = function(row, col) {
+        if(blockCollectionObj.contains(row, col)) {
+            let block = blockCollectionObj.get(row, col);
             return block === undefined || block === null || block.isEmpty();
         }
         return true;
     };
 
-    this.equals = function(other) {
+    blockCollectionObj.equals = function(other) {
         if(!other.get || !other.height || !other.width || !other.isEmptyBlock) {
             return false;
         }
 
-        if(this.height() !== other.height() || other.width() !== this.width()) {
+        if(blockCollectionObj.height() !== other.height() || other.width() !== blockCollectionObj.width()) {
             return false;
         }
 
-        for(let row = 0; row < this.height(); ++row) {
-            for(let col = 0; col < this.width(); ++col) {
-                if(this.isEmptyBlock(row, col)) {
+        for(let row = 0; row < blockCollectionObj.height(); ++row) {
+            for(let col = 0; col < blockCollectionObj.width(); ++col) {
+                if(blockCollectionObj.isEmptyBlock(row, col)) {
                     if(!other.isEmptyBlock(row, col)) {
                         return false;
                     }
@@ -67,4 +72,6 @@ export default function BlockCollection(args) {
         }
         return true;
     };
+
+    return blockCollectionObj;
 }

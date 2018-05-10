@@ -1,15 +1,18 @@
 export default function MockTetromino(args) {
     let {tetromino, clockwise, counterclockwise} = args;
+    let mockTetrominoObj = {};
 
-    this.getTetromino = function() {
+    mockTetrominoObj.getTetromino = function() {
         return tetromino;
     }
 
-    this.getClockwise = function() {
+    mockTetrominoObj.getClockwise = function() {
         return clockwise;
     }
 
-    this.getCounterclockwise = function() {
+    mockTetrominoObj.getCounterclockwise = function() {
         return counterclockwise;
     }
+
+    return mockTetrominoObj;
 }

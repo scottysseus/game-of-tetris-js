@@ -11,7 +11,7 @@ import Orientation from "./tetromino/orientation";
 test('throw tetromino places a tetromino at the top-center of the grid', () => {
     let mockTetrominos = mockTetrominoFactory.getAllMocks();
     mockTetrominos.forEach(mockTetromino => {
-        let well = new Well({grid: new BlockCollection({blocks: createMatrix(10,10)})});
+        let well = Well({blocks: createMatrix(10,10)});
         let tetromino = mockTetromino.getTetromino();
         let middleIndex = well.getCenteredColumn(tetromino.width())
         well.throwTetromino(tetromino);
@@ -22,7 +22,7 @@ test('throw tetromino places a tetromino at the top-center of the grid', () => {
 test('lowering active tetromino in an empty well works', () => {
     let mockTetrominos = mockTetrominoFactory.getAllMocks();
     mockTetrominos.forEach(mockTetromino => {
-        let well = new Well({grid: new BlockCollection({blocks: createMatrix(10,10)})});
+        let well = Well({blocks: createMatrix(10,10)});
         let tetromino = mockTetromino.getTetromino();
         well.throwTetromino(tetromino);
         well.lowerActiveTetromino();
@@ -34,7 +34,7 @@ test('lowering active tetromino in an empty well works', () => {
 test('shifting active tetromino in empty well works', () => {
     let mockTetrominos = mockTetrominoFactory.getAllMocks();
     mockTetrominos.forEach(mockTetromino => {
-        let well = new Well({grid: new BlockCollection({blocks: createMatrix(10,10)})});
+        let well = Well({blocks: createMatrix(10,10)});
         let tetromino = mockTetromino.getTetromino();
         well.throwTetromino(tetromino);
         well.shiftActiveTetromino(HorizontalDirection.LEFT);
@@ -45,11 +45,10 @@ test('shifting active tetromino in empty well works', () => {
 
 test('clearing full rows results in empty grid and returns the correct number of cleared rows', () => {
     for(let i = 0; i < 5; ++i) {
-        let blockCollection = new BlockCollection({blocks: createMatrix(10,10)});
+        let well = Well({blocks: createMatrix(10,10)});
         for(let rowToFill = 0; rowToFill <= i; rowToFill++) {
-            fillRow(blockCollection, blockCollection.height() - rowToFill - 1);
+            fillRow(well, well.height() - rowToFill - 1);
         }
-        let well = new Well({grid: blockCollection});
         let numCleared = well.clearFullRows();
         expect(numCleared).toBe(i + 1);
     }

@@ -1,25 +1,28 @@
 export default function Block(args) {
     let {content} = args;
+    let blockObj = {};
 
-    this.getContent = function() {
+    blockObj.getContent = function() {
         return content;
     };
 
-    this.rotate = function(rotationalDirection) {
-        if(!this.isEmpty()) {
+    blockObj.rotate = function(rotationalDirection) {
+        if(!blockObj.isEmpty()) {
             content.rotate(rotationalDirection);
         }
     };
 
-    this.isEmpty = function() {
+    blockObj.isEmpty = function() {
         return content === null || Object.keys(content).length < 1;
-    }
+    };
 
-    this.equals = function(other) {
+    blockObj.equals = function(other) {
         if(other.getContent && (other.getContent() === content || 
         (content.equals && content.equals(other.getContent())))) {
             return true;
         }
         return false;
-    }
+    };
+
+    return blockObj;
 }

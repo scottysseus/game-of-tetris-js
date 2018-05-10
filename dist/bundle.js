@@ -10707,10 +10707,9 @@ if (window.cordova) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.default = Boot;
 
 var _phaser = __webpack_require__(/*! phaser */ 46);
 
@@ -10726,67 +10725,46 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function Boot() {
+    var bootState = Object.create(new _phaser2.default.State());
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+    bootState.init = function () {
+        bootState.fontsReady = false;
+        bootState.fontsLoaded = bootState.fontsLoaded.bind(bootState);
+    };
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+    bootState.preload = function () {
+        if (_config2.default.webfonts.length) {
+            _webfontloader2.default.load({
+                google: {
+                    families: _config2.default.webfonts
+                },
+                active: bootState.fontsLoaded
+            });
+        }
 
-var _class = function (_Phaser$State) {
-  _inherits(_class, _Phaser$State);
+        var text = bootState.add.text(bootState.world.centerX, bootState.world.centerY, 'loading fonts', { font: '16px Arial', fill: '#dddddd', align: 'center' });
+        text.anchor.setTo(0.5, 0.5);
 
-  function _class() {
-    _classCallCheck(this, _class);
+        bootState.load.image('loaderBg', './assets/images/loader-bg.png');
+        bootState.load.image('loaderBar', './assets/images/loader-bar.png');
+    };
 
-    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
-  }
+    bootState.render = function () {
+        if (_config2.default.webfonts.length && bootState.fontsReady) {
+            bootState.state.start('Splash');
+        }
+        if (!_config2.default.webfonts.length) {
+            bootState.state.start('Splash');
+        }
+    };
 
-  _createClass(_class, [{
-    key: 'init',
-    value: function init() {
-      this.stage.backgroundColor = '#EDEEC9';
-      this.fontsReady = false;
-      this.fontsLoaded = this.fontsLoaded.bind(this);
-    }
-  }, {
-    key: 'preload',
-    value: function preload() {
-      if (_config2.default.webfonts.length) {
-        _webfontloader2.default.load({
-          google: {
-            families: _config2.default.webfonts
-          },
-          active: this.fontsLoaded
-        });
-      }
+    bootState.fontsLoaded = function () {
+        bootState.fontsReady = true;
+    };
 
-      var text = this.add.text(this.world.centerX, this.world.centerY, 'loading fonts', { font: '16px Arial', fill: '#dddddd', align: 'center' });
-      text.anchor.setTo(0.5, 0.5);
-
-      this.load.image('loaderBg', './assets/images/loader-bg.png');
-      this.load.image('loaderBar', './assets/images/loader-bar.png');
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      if (_config2.default.webfonts.length && this.fontsReady) {
-        this.state.start('Splash');
-      }
-      if (!_config2.default.webfonts.length) {
-        this.state.start('Splash');
-      }
-    }
-  }, {
-    key: 'fontsLoaded',
-    value: function fontsLoaded() {
-      this.fontsReady = true;
-    }
-  }]);
-
-  return _class;
-}(_phaser2.default.State);
-
-exports.default = _class;
+    return bootState;
+};
 
 /***/ }),
 /* 339 */
@@ -10801,10 +10779,9 @@ exports.default = _class;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.default = Splash;
 
 var _phaser = __webpack_require__(/*! phaser */ 46);
 
@@ -10814,48 +10791,30 @@ var _utils = __webpack_require__(/*! ../utils */ 340);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function Splash() {
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+    var splashState = Object.create(new _phaser2.default.State());
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+    splashState.init = function () {
+        splashState.loaderBg = splashState.add.sprite(splashState.game.world.centerX, splashState.game.world.centerY, 'loaderBg');
+        splashState.loaderBar = splashState.add.sprite(splashState.game.world.centerX, splashState.game.world.centerY, 'loaderBar');
+        (0, _utils.centerGameObjects)([splashState.loaderBg, splashState.loaderBar]);
 
-var _class = function (_Phaser$State) {
-  _inherits(_class, _Phaser$State);
+        splashState.load.setPreloadSprite(splashState.loaderBar);
+        //
+        // load your assets
+        //
+        splashState.load.image('mushroom', 'assets/images/mushroom2.png');
+        splashState.load.image('background', 'assets/images/background.png');
+        splashState.load.start();
+    };
 
-  function _class() {
-    _classCallCheck(this, _class);
+    splashState.create = function () {
+        splashState.state.start('Game');
+    };
 
-    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
-  }
-
-  _createClass(_class, [{
-    key: 'init',
-    value: function init() {}
-  }, {
-    key: 'preload',
-    value: function preload() {
-      this.loaderBg = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loaderBg');
-      this.loaderBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loaderBar');
-      (0, _utils.centerGameObjects)([this.loaderBg, this.loaderBar]);
-
-      this.load.setPreloadSprite(this.loaderBar);
-      //
-      // load your assets
-      //
-      this.load.image('mushroom', 'assets/images/mushroom2.png');
-    }
-  }, {
-    key: 'create',
-    value: function create() {
-      this.state.start('Game');
-    }
-  }]);
-
-  return _class;
-}(_phaser2.default.State);
-
-exports.default = _class;
+    return splashState;
+};
 
 /***/ }),
 /* 340 */
@@ -10909,10 +10868,9 @@ function createMatrix(height, width) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.default = Game;
 
 var _phaser = __webpack_require__(/*! phaser */ 46);
 
@@ -10924,63 +10882,18 @@ var _Mushroom2 = _interopRequireDefault(_Mushroom);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+/* globals __DEV__ */
+function Game() {
+    var gameState = Object.create(new _phaser2.default.State());
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+    gameState.create = function () {
+        gameState.add.image(0, 0, 'background').setOrigin(0, 0);
+    };
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* globals __DEV__ */
+    gameState.render = function () {};
 
-
-var _class = function (_Phaser$State) {
-  _inherits(_class, _Phaser$State);
-
-  function _class() {
-    _classCallCheck(this, _class);
-
-    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
-  }
-
-  _createClass(_class, [{
-    key: 'init',
-    value: function init() {}
-  }, {
-    key: 'preload',
-    value: function preload() {}
-  }, {
-    key: 'create',
-    value: function create() {
-      var bannerText = 'Phaser + ES6 + Webpack';
-      var banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText, {
-        font: '40px Bangers',
-        fill: '#77BFA3',
-        smoothed: false
-      });
-
-      banner.padding.set(10, 16);
-      banner.anchor.setTo(0.5);
-
-      this.mushroom = new _Mushroom2.default({
-        game: this.game,
-        x: this.world.centerX,
-        y: this.world.centerY,
-        asset: 'mushroom'
-      });
-
-      this.game.add.existing(this.mushroom);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      if (true) {
-        this.game.debug.spriteInfo(this.mushroom, 32, 32);
-      }
-    }
-  }]);
-
-  return _class;
-}(_phaser2.default.State);
-
-exports.default = _class;
+    return gameState;
+};
 
 /***/ }),
 /* 342 */

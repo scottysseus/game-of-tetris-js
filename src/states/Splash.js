@@ -1,22 +1,28 @@
-import Phaser from 'phaser'
-import { centerGameObjects } from '../utils'
+import Phaser from 'phaser';
+import { centerGameObjects } from '../utils';
 
-export default class extends Phaser.State {
-  init () {}
+export default function Splash() {
 
-  preload () {
-    this.loaderBg = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loaderBg')
-    this.loaderBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loaderBar')
-    centerGameObjects([this.loaderBg, this.loaderBar])
+    let splashState = Object.create(new Phaser.State());
 
-    this.load.setPreloadSprite(this.loaderBar)
-    //
-    // load your assets
-    //
-    this.load.image('mushroom', 'assets/images/mushroom2.png')
-  }
+    splashState.init = function() {
+        splashState.loaderBg = splashState.add.sprite(splashState.game.world.centerX, splashState.game.world.centerY, 'loaderBg');
+        splashState.loaderBar = splashState.add.sprite(splashState.game.world.centerX, splashState.game.world.centerY, 'loaderBar');
+        centerGameObjects([splashState.loaderBg, splashState.loaderBar]);
+    
+        splashState.load.setPreloadSprite(splashState.loaderBar);
+        //
+        // load your assets
+        //
+        splashState.load.image('mushroom', 'assets/images/mushroom2.png');
+        splashState.load.image('background', 'assets/images/background.png');
+        splashState.load.start();
+    };
 
-  create () {
-    this.state.start('Game')
-  }
-}
+    splashState.create = function() {
+        splashState.state.start('Game');
+    };
+
+    return splashState;
+
+};

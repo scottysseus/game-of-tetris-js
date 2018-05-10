@@ -3,22 +3,15 @@ import {createMatrix} from "../../utils";
 import BlockCollection from "../blockCollection";
 
 export default function Tetromino(args) {
+    let tetrominoObj = Object.create(BlockCollection(args));
 
-    let {blockCollection} = args;
-
-    this.rotate = function(rotationalDirection) {
+    tetrominoObj.rotate = function(rotationalDirection) {
         let tempBlocks = rotateBlocks(rotationalDirection);
         rotateEachBlock(tempBlocks, rotationalDirection);
-        blockCollection = new BlockCollection({blocks: tempBlocks});
+        tetrominoObj.setAll(tempBlocks);
     };
 
-    this.height = blockCollection.height;
-    this.width = blockCollection.width;
-    this.contains = blockCollection.contains;
-    this.get = blockCollection.get;
-    this.isEmptyBlock = blockCollection.isEmptyBlock;
-
-    this.getRotatedIndex = function(row, col, rotationalDirection, numRotations) {
+    tetrominoObj.getRotatedIndex = function(row, col, rotationalDirection, numRotations) {
         let newRow = row;
         let newCol = col;
         for(let i = 0; i < numRotations; ++i) {
@@ -26,38 +19,27 @@ export default function Tetromino(args) {
             let oldCol = newCol;
             if(rotationalDirection === RotationalDirection.CLOCKWISE) {
                 newRow = oldCol;
-                newCol = blockCollection.height() - 1 - oldRow;
+                newCol = tetrominoObj.height() - 1 - oldRow;
             } else {
-                newRow = blockCollection.width() - 1 - oldCol;
+                newRow = tetrominoObj.width() - 1 - oldCol;
                 newCol = oldRow;
             }
         }
         return [newRow, newCol];
     };
 
-    this.getBlockCollection = function() {
-        return blockCollection;
-    };
-
-    this.equals = function(other) {
-        if(other.getBlockCollection && blockCollection.equals(other.getBlockCollection())) {
-            return true;
-        }
-        return false;
-    };
-
     let rotateBlocks = function(rotationalDirection) {
-        let height = blockCollection.height();
-        let width = blockCollection.width();
+        let height = tetrominoObj.height();
+        let width = tetrominoObj.width();
         let tempBlocks = createMatrix(width, height);
         for(let row = 0; row < height; ++row) {
             for(let col = 0; col < width; ++col) {
-                let index = this.getRotatedIndex(row, col, rotationalDirection, 1);
-                tempBlocks[index[0]][index[1]] = blockCollection.get(row,col);
+                let index = tetrominoObj.getRotatedIndex(row, col, rotationalDirection, 1);
+                tempBlocks[index[0]][index[1]] = tetrominoObj.get(row,col);
             }
         }
         return tempBlocks;
-    }.bind(this);
+    };
 
     let rotateEachBlock = function(blocks, rotationalDirection) {
         for(let row = 0; row < blocks.length; ++row) {
@@ -68,6 +50,7 @@ export default function Tetromino(args) {
                 }
             }
         }
-    }.bind(this);
+    };
 
+    return tetrominoObj;
 }
