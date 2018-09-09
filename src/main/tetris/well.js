@@ -10,6 +10,10 @@ export default function Well(args) {
     this.contains = grid.contains;
     this.get = grid.get;
 
+    this.hasActiveTetromino = function() {
+        return activeTetromino !== null;
+    }
+
     this.throwTetromino = function(tetromino) {
         activeTetromino = tetromino;
         activeRow = 0;
@@ -96,6 +100,10 @@ export default function Well(args) {
             this.refreshActiveTetromino();
         }
     };
+
+    this.topIsTouched = function() {
+        return getRowCount(0) > 0;
+    }
 
     let willCollideVerically = function() {
         for(let col = 0; col < activeTetromino.width(); ++col) {

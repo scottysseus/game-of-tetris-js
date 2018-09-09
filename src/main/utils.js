@@ -11,3 +11,7 @@ export function createMatrix(height, width) {
     while (a.push(b = []) < height) while (b.push(null) < width);
     return a;
 }
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
