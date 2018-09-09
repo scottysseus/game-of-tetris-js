@@ -5,8 +5,22 @@
     <title>Game of Tetris</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
     <style type="text/css">
-        body {
+        *, *:before, *:after { box-sizing: border-box; }
+        html, body {
+            height: 100%;
             margin: 0;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #222;
+        }
+        canvas {
+            border: 2px solid #333;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
         }
     </style>
 </head>

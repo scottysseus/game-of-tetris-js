@@ -1,26 +1,21 @@
-import Phaser from "phaser";
+import Phaser from 'phaser';
 
-var config = {
+import PlayScene from './game/play/playScene'
+import PreloadScene from './game/init/preloadScene';
+
+let playScene = new PlayScene();
+playScene.key = 'play';
+playScene.active = true;
+
+let preloadScene = new PreloadScene();
+preloadScene.key = 'preload';
+preloadScene.active = false;
+
+const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
-    }
+    width: 600,
+    height: 800,
+    scene: [ preloadScene, playScene ]
 };
 
 const game = new Phaser.Game(config);
-
-function preload() {
-    this.load.image('sky', 'src/assets/img/sky.png');
-}
-
-function create() {
-    this.add.image(400, 300, 'sky');
-}
-
-function update() {
-
-}
