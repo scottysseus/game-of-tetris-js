@@ -1,6 +1,6 @@
 import Well from "./well";
 import BlockCollection from "./blockCollection";
-import { createMatrix, getRandomInt } from "./../utils";
+import { createMatrix } from "./../utils";
 
 const SCORE_MULTIPLIER = 100;
 const INITIAL_DROP_SPEED = 48;
@@ -21,8 +21,6 @@ export default function TetrisGame(args) {
     let dropSpeed = INITIAL_DROP_SPEED;
     let frameCount = 0;
 
-    let lastTetrominoIndex;
-
     let gameOver = false;
 
     this.update = function() {
@@ -31,25 +29,27 @@ export default function TetrisGame(args) {
         }
 
         if(!well.hasActiveTetromino()) {
-            well.throwTetromino(getRandomTetromino());
+            well.throwTetromino(tetrominoFactory.getRandomTetromino());
+            return;
         }
 
-        if(frameCount >= dropSpeed) {
+        if(frameCount <= 0) {
             well.lowerActiveTetromino();    
-            frameCount = 0;
+            frameCount = dropSpeed;
         }
         
         if(!well.hasActiveTetromino()) {
             let numRowsCleared = well.clearFullRows();
             score += numRowsCleared * SCORE_MULTIPLIER;
             setDropSpeedFromScore();
+            frameCount = 0;
         }
 
         if(well.topIsTouched()) {
             gameOver = true;
         }
 
-        frameCount++;
+        --frameCount;
     }
 
     this.rotateActiveTetromino = function(circularDirection) {
@@ -67,24 +67,6 @@ export default function TetrisGame(args) {
     this.getWellGrid = function() {
         return well.getGrid();
     }
-
-    const getRandomTetromino = function() {
-        return tetrominoFactory.buildTetromino(getRandomShape());
-    }.bind(this);
-
-    const getRandomShape = function() {
-        return getRandomShapeRecurse(7);
-    }.bind(this);
-
-    const getRandomShapeRecurse = function(bounds) {
-        let random = getRandomInt(0, bounds);
-        if(random == 7 || random == lastTetrominoIndex) {
-            return getRandomShape(7);
-        } else {
-            lastTetrominoIndex = random;
-            return TetrominoShape.values()[random];
-        }
-    }.bind(this);
 
     const setDropSpeedFromScore = function() {
         const level = score / (5 * SCORE_MULTIPLIER);

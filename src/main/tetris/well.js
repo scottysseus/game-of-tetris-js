@@ -111,7 +111,7 @@ export default function Well(args) {
                 if(activeTetromino.isEmptyBlock(row, col)) {
                     continue;
                 }
-                if(grid.get(activeRow + row + 1, activeCol + col) !== null) {
+                if(!grid.isEmptyBlock(activeRow + row + 1, activeCol + col)) {
                     return true;
                 }
                 break;

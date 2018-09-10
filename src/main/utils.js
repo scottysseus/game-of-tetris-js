@@ -12,6 +12,6 @@ export function createMatrix(height, width) {
     return a;
 }
 
-function getRandomInt(min, max) {
+export function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
