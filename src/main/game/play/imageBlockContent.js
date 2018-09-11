@@ -21,4 +21,7 @@ export default function ImageBlockContent(args) {
         return image;
     }
 
+    this.destroy = function() {
+        return image.destroy();
+    }
 }

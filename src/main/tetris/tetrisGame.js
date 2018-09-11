@@ -34,18 +34,11 @@ export default function TetrisGame(args) {
         }
 
         if(frameCount <= 0) {
-            well.lowerActiveTetromino();    
+            this.lowerActiveTetromino();    
             frameCount = dropSpeed;
         }
-        
-        if(!well.hasActiveTetromino()) {
-            let numRowsCleared = well.clearFullRows();
-            score += numRowsCleared * SCORE_MULTIPLIER;
-            setDropSpeedFromScore();
-            frameCount = 0;
-        }
 
-        if(well.topIsTouched()) {
+        if(well.topIsTouched() && !well.hasActiveTetromino()) {
             gameOver = true;
         }
 
@@ -58,6 +51,16 @@ export default function TetrisGame(args) {
 
     this.shiftActiveTetromino = function(horizontalDirection) {
         well.shiftActiveTetromino(horizontalDirection);
+    }
+
+    this.lowerActiveTetromino = function() {
+        well.lowerActiveTetromino();
+        if(!well.hasActiveTetromino()) {
+            let numRowsCleared = well.clearFullRows();
+            score += numRowsCleared * SCORE_MULTIPLIER;
+            setDropSpeedFromScore();
+            frameCount = 0;
+        }
     }
 
     this.isGameOver = function() {

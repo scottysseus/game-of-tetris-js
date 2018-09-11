@@ -5,6 +5,10 @@ export default function Block(args) {
         return content;
     };
 
+    this.clearContent = function() {
+        content.destroy();
+    }
+
     this.rotate = function(rotationalDirection) {
         if(!this.isEmpty()) {
             content.rotate(rotationalDirection);

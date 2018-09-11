@@ -12,10 +12,12 @@ const BLOCK_HEIGHT = BLOCK_WIDTH;
 export default function PlayScene(args) {
 
     let tetrisGame, blockRenderer;
-    let counterclockwiseKey, clockwiseKey, leftKey, rightKey;
+    let counterclockwiseKey, clockwiseKey, leftKey, rightKey, downKey;
 
     let isShifting = false;
     let isRotating = false;
+
+    let debugText;
 
     this.preload = function() {
 
@@ -36,13 +38,15 @@ export default function PlayScene(args) {
         checkForInput(this.input.keyboard);
         tetrisGame.update();
         blockRenderer.renderBlockCollection(GRID_START_X, GRID_START_Y, BLOCK_WIDTH, tetrisGame.getWellGrid());
+        displayWellDebug(this.add);
     }
 
     const initializeKeys = function(keyboardPlugin) {
-        clockwiseKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.PERIOD);
-        counterclockwiseKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.COMMA);
+        clockwiseKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+        counterclockwiseKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
         leftKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         rightKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        downKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
     }.bind(this);
 
     const checkForInput = function(keyboardPlugin) {
@@ -61,6 +65,34 @@ export default function PlayScene(args) {
         if(keyboardPlugin.checkDown(rightKey, 500)) {
             tetrisGame.shiftActiveTetromino(HorizontalDirection.RIGHT);
         }
+
+        if(keyboardPlugin.checkDown(downKey, 500)) {
+            tetrisGame.lowerActiveTetromino();
+        }
+    }.bind(this);
+
+    const displayWellDebug = function(gameObjectFactory) {
+        let wellGrid = tetrisGame.getWellGrid();
+
+        let debugString = '';
+
+        for(let row = 0; row < wellGrid.height(); ++row) {
+            debugString += '[';
+            for(let col = 0; col < wellGrid.width(); ++col) {
+                if(wellGrid.isEmptyBlock(row, col)) {
+                    debugString += '0';
+                } else {
+                    debugString += '1';
+                }
+            }
+            debugString += ']\n';
+        }
+
+        if(!debugText) {
+            debugText = gameObjectFactory.text(320, 300, debugString, { fontSize: '18px', fill: '#FFFFFF' });
+        }
+        debugText.setText(debugString);
+
     }.bind(this);
 
 };

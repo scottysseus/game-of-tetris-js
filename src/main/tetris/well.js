@@ -99,7 +99,7 @@ export default function Well(args) {
 
     this.rotateActiveTetromino = function(circularDirection) {
         if(canRotate(circularDirection)) {
-            clearTetromino()
+            clearTetromino();
             activeTetromino.rotate(circularDirection);
             this.refreshActiveTetromino();
         }
@@ -190,10 +190,20 @@ export default function Well(args) {
         return itemsInRow;
     }.bind(this);
 
+    let clearRow = function(row) {
+        for(let col = 0; col < this.width(); ++col) {
+            grid.clear(row, col);
+        }
+    }.bind(this);
+
     let collapseRow = function(row) {
+        clearRow(row);
+        --row;
+        // recursively shift rows down by 1
         while(row > 0 && getRowCount(row) > 0) {
-            for(let col = 0; col < this.width(); ++col) {
-                grid.set(row, col, grid.get(row-1, col));
+            for(let col = 0; col < this.width(); ++col) {                
+                grid.set(row + 1, col, grid.get(row, col));
+                grid.set(row, col, null);
             }
             --row;
         }

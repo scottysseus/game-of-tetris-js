@@ -32,6 +32,13 @@ export default function BlockCollection(args) {
         }
     };
 
+    this.clear = function(row, col) {
+        if(!this.isEmptyBlock(row, col)) {
+            blocks[row][col].clearContent();
+            blocks[row][col] = null;
+        }
+    }
+
     this.contains = function(row, col) {
         return row < this.height() && col < this.width() && row >= 0 && col >= 0;
     };
