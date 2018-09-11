@@ -14,6 +14,10 @@ export default function Well(args) {
         return activeTetromino !== null;
     }
 
+    this.getActiveTetromino = function() {
+        return activeTetromino;
+    }
+
     this.throwTetromino = function(tetromino) {
         activeTetromino = tetromino;
         activeRow = 0;
@@ -154,9 +158,9 @@ export default function Well(args) {
                 let newIndex = activeTetromino.getRotatedIndex(row, col, circularDirection, 1);
                 let newRow = activeRow + newIndex[0];
                 let newCol = activeCol + newIndex[1];
-                if(!grid.columnInBounds(newCol) || grid.rowInBounds(newRow) || (
-                    !activeTetromino.contains(newIndex[0], newIndex[1]
-                    && !activeTetromino.isEmptyBlock(row, col))
+                if(!grid.columnInBounds(newCol) || !grid.rowInBounds(newRow) || (
+                    !activeTetromino.contains(newIndex[0], newIndex[1])
+                    && !activeTetromino.isEmptyBlock(row, col)
                     && !grid.isEmptyBlock(newRow, newCol)
                 )) {
                     return false;

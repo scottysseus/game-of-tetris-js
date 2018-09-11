@@ -1,3 +1,6 @@
+import RotationalDirection from '../tetris/direction/rotationalDirection';
+import {createMatrix} from '../utils';
+
 export default function BlockCollection(args) {
     let {blocks} = args;
     
@@ -38,7 +41,29 @@ export default function BlockCollection(args) {
             let block = this.get(row, col);
             return block === undefined || block === null || block.isEmpty();
         }
-        return true;
+        return false;
+    };
+
+    this.rotate = function(rotationalDirection) {
+        rotateBlocks(rotationalDirection);
+        rotateEachBlock(rotationalDirection);
+    };
+
+    this.getRotatedIndex = function(row, col, rotationalDirection, numRotations) {
+        let newRow = row;
+        let newCol = col;
+        for(let i = 0; i < numRotations; ++i) {
+            let oldRow = newRow;
+            let oldCol = newCol;
+            if(rotationalDirection === RotationalDirection.CLOCKWISE) {
+                newRow = oldCol;
+                newCol = this.height() - 1 - oldRow;
+            } else {
+                newRow = this.width() - 1 - oldCol;
+                newCol = oldRow;
+            }
+        }
+        return [newRow, newCol];
     };
 
     this.equals = function(other) {
@@ -67,4 +92,28 @@ export default function BlockCollection(args) {
         }
         return true;
     };
+
+    let rotateBlocks = function(rotationalDirection) {
+        let height = this.height();
+        let width = this.width();
+        let tempBlocks = createMatrix(width, height);
+        for(let row = 0; row < height; ++row) {
+            for(let col = 0; col < width; ++col) {
+                let index = this.getRotatedIndex(row, col, rotationalDirection, 1);
+                tempBlocks[index[0]][index[1]] = this.get(row,col);
+            }
+        }
+        blocks = tempBlocks;
+    }.bind(this);
+
+    let rotateEachBlock = function(rotationalDirection) {
+        for(let row = 0; row < blocks.length; ++row) {
+            for(let col = 0; col < blocks[0].length; ++col) {
+                let block = blocks[row][col];
+                if(block !== null && !block.isEmpty()) {
+                    blocks[row][col].rotate(rotationalDirection);
+                }
+            }
+        }
+    }.bind(this);
 }

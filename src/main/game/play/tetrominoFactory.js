@@ -2,6 +2,7 @@ import TetrominoShape from '../../tetris/tetromino/tetrominoShape';
 import Tetromino from '../../tetris/tetromino/tetromino';
 import Block from '../../tetris/tetromino/block';
 import BlockCollection from '../../tetris/blockCollection';
+import ImageBlockContent from './imageBlockContent';
 import {createMatrix, getRandomInt} from '../../utils';
 
 const START_X = 0;
@@ -27,9 +28,7 @@ export default function TetrominoFactory(args) {
             for(var col = 0; col < arrangement[row].length; ++col) {
                 let newBlock;
                 if(arrangement[row][col]) {
-                    newBlock = new Block({
-                        content: gameObjectFactory.image(START_X, START_Y, 'tetromino', 0).setOrigin(0,0)
-                    });
+                    newBlock = getNewBlock();
                 } else {
                     newBlock = null;
                 }
@@ -45,6 +44,14 @@ export default function TetrominoFactory(args) {
     this.getRandomTetromino = function() {
         return this.buildTetromino(getRandomShape());
     };
+
+    const getNewBlock = function() {
+        return new Block({
+            content: new ImageBlockContent({
+                image: gameObjectFactory.image(START_X, START_Y, 'tetromino', 0).setOrigin(0,0)
+            })
+        });
+    }.bind(this);
 
     const getRandomShape = function() {
         return getRandomShapeRecurse(7);
