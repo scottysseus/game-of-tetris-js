@@ -48,7 +48,7 @@ export default function TetrominoFactory(args) {
     const getNewBlock = function() {
         return new Block({
             content: new ImageBlockContent({
-                image: gameObjectFactory.image(START_X, START_Y, 'tetromino', 0).setOrigin(0,0)
+                image: gameObjectFactory.image(START_X, START_Y, 'tetromino', 0)
             })
         });
     }.bind(this);

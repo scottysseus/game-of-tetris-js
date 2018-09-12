@@ -5,8 +5,8 @@ export default function ImageBlockContent(args) {
     let {image} = args;
 
     this.rotate = function(rotationalDirection) {
-        image.angle = 360 % 
-            (image.angle + RotationalDirection.properties[rotationalDirection].multiplier * 90);
+        let newAngle = (image.angle + RotationalDirection.properties[rotationalDirection].multiplier * 90);
+        image.angle = newAngle % 360;            
     }
 
     this.setX = function(x) {
@@ -23,5 +23,13 @@ export default function ImageBlockContent(args) {
 
     this.destroy = function() {
         return image.destroy();
+    }
+
+    this.width = function() {
+        return image.width;
+    }
+
+    this.height = function() {
+        return image.height;
     }
 }

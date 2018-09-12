@@ -38,7 +38,6 @@ export default function PlayScene(args) {
         checkForInput(this.input.keyboard);
         tetrisGame.update();
         blockRenderer.renderBlockCollection(GRID_START_X, GRID_START_Y, BLOCK_WIDTH, tetrisGame.getWellGrid());
-        displayWellDebug(this.add);
     }
 
     const initializeKeys = function(keyboardPlugin) {
@@ -71,6 +70,7 @@ export default function PlayScene(args) {
         }
     }.bind(this);
 
+    // for debug only
     const displayWellDebug = function(gameObjectFactory) {
         let wellGrid = tetrisGame.getWellGrid();
 
