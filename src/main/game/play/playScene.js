@@ -1,3 +1,5 @@
+import Phaser from 'phaser';
+
 import TetrominoFactory from './tetrominoFactory';
 import TetrisGame from '../../tetris/tetrisGame';
 import BlockRenderer from './blockRenderer';
@@ -7,17 +9,19 @@ import RotationalDirection from '../../tetris/direction/rotationalDirection';
 const GRID_START_X = 0;
 const GRID_START_Y = 250;
 const BLOCK_WIDTH = 25;
-const BLOCK_HEIGHT = BLOCK_WIDTH;
 
 export default function PlayScene(args) {
+    Object.assign(new Phaser.Scene({
+        key: 'play',
+        active: false
+    }), this);
 
     let tetrisGame, blockRenderer;
     let counterclockwiseKey, clockwiseKey, leftKey, rightKey, downKey;
 
-    let isShifting = false;
-    let isRotating = false;
-
     let debugText;
+
+    let scoreScene;
 
     this.preload = function() {
 
@@ -31,7 +35,9 @@ export default function PlayScene(args) {
 
         blockRenderer = new BlockRenderer();
 
-        initializeKeys(this.input.keyboard);
+        initializeKeys();
+
+        // this.scene.start('score');
     }
 
     this.update = function() {
@@ -40,7 +46,8 @@ export default function PlayScene(args) {
         blockRenderer.renderBlockCollection(GRID_START_X, GRID_START_Y, BLOCK_WIDTH, tetrisGame.getWellGrid());
     }
 
-    const initializeKeys = function(keyboardPlugin) {
+    const initializeKeys = function() {
+        let keyboardPlugin = this.add.input;
         clockwiseKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.X);
         counterclockwiseKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
         leftKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -48,7 +55,8 @@ export default function PlayScene(args) {
         downKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
     }.bind(this);
 
-    const checkForInput = function(keyboardPlugin) {
+    const checkForInput = function() {
+        let keyboardPlugin = this.input.keyboard;
         if(keyboardPlugin.checkDown(clockwiseKey, 500)) {
             tetrisGame.rotateActiveTetromino(RotationalDirection.CLOCKWISE);
         }
@@ -71,7 +79,7 @@ export default function PlayScene(args) {
     }.bind(this);
 
     // for debug only
-    const displayWellDebug = function(gameObjectFactory) {
+    const displayWellDebug = function() {
         let wellGrid = tetrisGame.getWellGrid();
 
         let debugString = '';
@@ -89,7 +97,7 @@ export default function PlayScene(args) {
         }
 
         if(!debugText) {
-            debugText = gameObjectFactory.text(320, 300, debugString, { fontSize: '18px', fill: '#FFFFFF' });
+            debugText = this.add.text(320, 300, debugString, { fontSize: '18px', fill: '#FFFFFF' });
         }
         debugText.setText(debugString);
 
