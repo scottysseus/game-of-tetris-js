@@ -9,7 +9,7 @@ const WELL_HEIGHT = 20;
 
 export default function TetrisGame(args) {
 
-    let {tetrominoFactory} = args;
+    let {tetrominoFactory, eventListener} = args;
 
     let well = new Well({
         grid: new BlockCollection({
@@ -40,6 +40,7 @@ export default function TetrisGame(args) {
 
         if(well.topIsTouched() && !well.hasActiveTetromino()) {
             gameOver = true;
+            eventListener.gameOver();
         }
 
         --frameCount;
@@ -58,6 +59,7 @@ export default function TetrisGame(args) {
         if(!well.hasActiveTetromino()) {
             let numRowsCleared = well.clearFullRows();
             score += numRowsCleared * SCORE_MULTIPLIER;
+            eventListener.scoreChanged(score);
             setDropSpeedFromScore();
             frameCount = 0;
         }
