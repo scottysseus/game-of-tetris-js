@@ -2,21 +2,12 @@ import Phaser from 'phaser';
 import Scenes from '../scenes';
 import TextConstants from '../textConstants';
 
-import {makeTextInteractive} from '../phaserUtils';
+import {makeTextInteractive, getTextOptions} from '../phaserUtils';
 
 let restartButton;
 
-const gameOverStyle = {
-    fontSize: "72px",
-    color: "#FFFFFF",
-    fontFamily: TextConstants.FONT_FAMILY
-};
-
-let optionStyle = {
-    fontSize: "48px",
-    color: "#FFFFFF",
-    fontFamily: TextConstants.FONT_FAMILY
-};
+const gameOverStyle = getTextOptions(TextConstants.TITLE_SIZE);
+const optionStyle = getTextOptions(TextConstants.MENU_OPTION_SIZE);
 
 export default class GameOverScene extends Phaser.Scene {
     constructor(args) {
