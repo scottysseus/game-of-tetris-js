@@ -2,8 +2,6 @@ import Phaser from 'phaser';
 import RegistryFields from '../registryFields';
 import TextConstants from '../textConstants';
 
-let scoreTextField;
-
 const scoreX = 60;
 const scoreY = 60;
 
@@ -14,12 +12,12 @@ const scoreStyle = {
 };
 
 const updateScore = function(score) {
-    scoreTextField.setText('Score: ' + score.toString().padStart(6, '0'));
+    this.scoreTextField.setText('Score: ' + score.toString().padStart(6, '0'));
 };
 
 const scoreChangedCallback = function(parent, key, data) {
     if(key === RegistryFields.SCORE) {
-        updateScore(data);
+        updateScore.call(this, data);
     }
 }
 
@@ -27,11 +25,15 @@ export default class ScoreScene extends Phaser.Scene {
     
     constructor(args) {
         super(args);
+        this.scoreTextField;
+    }
+
+    init() {
+        this.scoreTextField = this.add.text(scoreX, scoreY, "", scoreStyle);
     }
 
     create() {
-        scoreTextField = this.add.text(scoreX, scoreY, "", scoreStyle);
-        updateScore(0);
+        updateScore.call(this, 0);
     }
 
     update() {

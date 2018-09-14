@@ -81,21 +81,20 @@ export default class PlayScene extends Phaser.Scene {
         super(args);
     }
 
+    init() {
+        this.add.image(0,0, 'background').setOrigin(0,0);
+        blockRenderer = new BlockRenderer();
+
+        initializeKeys.call(this);
+    }
+
     preload() {
 
     }
 
     create() {
-        this.add.image(0,0, 'background').setOrigin(0,0);
-
         const tetrominoFactory = new TetrominoFactory({gameObjectFactory: this.add});
         tetrisGame = new TetrisGame({tetrominoFactory, eventListener: this});
-
-        blockRenderer = new BlockRenderer();
-
-        initializeKeys.call(this);
-
-        this.scene.launch(Scenes.SCORE);
     }
 
     update() {
