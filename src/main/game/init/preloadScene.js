@@ -3,8 +3,8 @@ import Scenes from '../scenes';
 
 const loadFonts = function() {
     let callback = function() {
-        this.scene.start(Scenes.PLAY);
-        this.scene.start(Scenes.SCORE);
+        this.scene.start(Scenes.WORLD);
+        this.scene.start(Scenes.MENU);
     }
 
     //  The Google WebFont Loader will look for this object, so create it before loading the script.

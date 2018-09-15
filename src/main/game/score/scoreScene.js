@@ -12,7 +12,7 @@ const scoreStyle = {
 };
 
 const updateScore = function(score) {
-    this.scoreTextField.setText('Score: ' + score.toString().padStart(6, '0'));
+    this.scoreTextField.setText('SCORE: ' + score.toString().padStart(6, '0'));
 };
 
 const scoreChangedCallback = function(parent, key, data) {

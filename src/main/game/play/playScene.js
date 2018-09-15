@@ -13,6 +13,8 @@ const GRID_START_X = 0;
 const GRID_START_Y = 250;
 const BLOCK_WIDTH = 25;
 
+const BUTTON_DELAY = 100;
+
 let tetrisGame, blockRenderer;
 let counterclockwiseKey, clockwiseKey, leftKey, rightKey, downKey;
 
@@ -29,23 +31,23 @@ const initializeKeys = function() {
 
 const checkForInput = function() {
     let keyboardPlugin = this.input.keyboard;
-    if(keyboardPlugin.checkDown(clockwiseKey, 500)) {
+    if(keyboardPlugin.checkDown(clockwiseKey, BUTTON_DELAY)) {
         tetrisGame.rotateActiveTetromino(RotationalDirection.CLOCKWISE);
     }
 
-    if(keyboardPlugin.checkDown(counterclockwiseKey, 500)) {
+    if(keyboardPlugin.checkDown(counterclockwiseKey, BUTTON_DELAY)) {
         tetrisGame.rotateActiveTetromino(RotationalDirection.COUNTERCLOCKWISE);
     }
 
-    if(keyboardPlugin.checkDown(leftKey, 500)) {
+    if(keyboardPlugin.checkDown(leftKey, BUTTON_DELAY)) {
         tetrisGame.shiftActiveTetromino(HorizontalDirection.LEFT);
     }
 
-    if(keyboardPlugin.checkDown(rightKey, 500)) {
+    if(keyboardPlugin.checkDown(rightKey, BUTTON_DELAY)) {
         tetrisGame.shiftActiveTetromino(HorizontalDirection.RIGHT);
     }
 
-    if(keyboardPlugin.checkDown(downKey, 500)) {
+    if(keyboardPlugin.checkDown(downKey, BUTTON_DELAY)) {
         tetrisGame.lowerActiveTetromino();
     }
 };
@@ -82,7 +84,6 @@ export default class PlayScene extends Phaser.Scene {
     }
 
     init() {
-        this.add.image(0,0, 'background').setOrigin(0,0);
         blockRenderer = new BlockRenderer();
 
         initializeKeys.call(this);

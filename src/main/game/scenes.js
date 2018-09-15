@@ -3,4 +3,6 @@ export default Object.freeze({
     PRELOAD: 'preload',
     SCORE: 'score',
     GAME_OVER: 'gameOver',
+    MENU: 'menu',
+    WORLD: 'world'
 });

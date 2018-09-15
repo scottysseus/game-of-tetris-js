@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import TextConstants from './textConstants';
 
 export function makeTextInteractive(textObject) {
     textObject.setInteractive(new Phaser.Geom.Rectangle(0, 0, textObject.width, textObject.height), Phaser.Geom.Rectangle.Contains);
