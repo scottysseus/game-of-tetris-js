@@ -29,7 +29,7 @@ export default function TetrisGame(args) {
         }
 
         if(!well.hasActiveTetromino()) {
-            well.throwTetromino(tetrominoFactory.getRandomTetromino());
+            throwTetromino();
             return;
         }
 
@@ -90,5 +90,12 @@ export default function TetrisGame(args) {
         } else {
             dropSpeed = 1;
         }
+    }.bind(this);
+
+    const throwTetromino = function() {
+        let tetrominoShape = tetrominoFactory.getRandomShape();
+        eventListener.throwingTetromino(tetrominoShape);
+        let tetromino = tetrominoFactory.buildTetromino(tetrominoShape);
+        well.throwTetromino(tetromino);
     }.bind(this);
 }

@@ -8,10 +8,7 @@ import RotationalDirection from '../../tetris/direction/rotationalDirection';
 
 import Scenes from '../scenes';
 import RegistryFields from '../registryFields';
-
-const GRID_START_X = 0;
-const GRID_START_Y = 250;
-const BLOCK_WIDTH = 25;
+import WorldConstants from '../world/worldConstants';
 
 const BUTTON_DELAY = 100;
 
@@ -101,7 +98,7 @@ export default class PlayScene extends Phaser.Scene {
     update() {
         checkForInput.call(this);
         tetrisGame.update();
-        blockRenderer.renderBlockCollection(GRID_START_X, GRID_START_Y, BLOCK_WIDTH, tetrisGame.getWellGrid());
+        blockRenderer.renderBlockCollection(WorldConstants.WELL_TOP_LEFT_X, WorldConstants.WELL_TOP_LEFT_Y, WorldConstants.BLOCK_WIDTH, tetrisGame.getWellGrid());
     }
 
     scoreChanged(score) {
@@ -110,5 +107,9 @@ export default class PlayScene extends Phaser.Scene {
 
     gameOver() {
         this.scene.launch(Scenes.GAME_OVER);
+    }
+
+    throwingTetromino(tetrominoShape) {
+
     }
 };

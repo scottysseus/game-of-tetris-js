@@ -1,5 +1,11 @@
 import Phaser from 'phaser';
 import Scenes from '../scenes';
+import WorldConstants from '../world/worldConstants';
+
+const ASSETS_DIR = 'src/assets/';
+const IMG_DIR = ASSETS_DIR + 'img/';
+
+const FRAME_SIZE = WorldConstants.BLOCK_WIDTH;
 
 const loadFonts = function() {
     let callback = function() {
@@ -31,6 +37,20 @@ const loadFonts = function() {
     this.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 };
 
+const shapes = [
+    'I',
+    'J',
+    'L',
+    'O',
+    'S',
+    'T',
+    'Z'
+];
+
+const filenameForShape = function (shapeName) {
+    return IMG_DIR + shapeName + '.png';
+};
+
 export default class PreloadScene extends Phaser.Scene {
 
     constructor(args) {
@@ -38,8 +58,11 @@ export default class PreloadScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', 'src/assets/img/background.png');
-        this.load.spritesheet('tetromino', 'src/assets/img/test-tetromino.png', {frameWidth: 25, frameHeight: 25});
+        this.load.image('background', IMG_DIR + 'background.png');
+
+        shapes.forEach(shapeName => {
+            this.load.spritesheet(shapeName, filenameForShape(shapeName), { frameWidth: FRAME_SIZE, frameHeight: FRAME_SIZE });
+        });
         loadFonts.call(this);
     }
 

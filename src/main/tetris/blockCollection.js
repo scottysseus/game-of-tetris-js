@@ -118,7 +118,7 @@ export default function BlockCollection(args) {
             for(let col = 0; col < blocks[0].length; ++col) {
                 let block = blocks[row][col];
                 if(block !== null && !block.isEmpty()) {
-                    blocks[row][col].rotate(rotationalDirection);
+                    blocks[row][col].rotate(RotationalDirection.reverse(rotationalDirection));
                 }
             }
         }

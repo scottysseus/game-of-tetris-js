@@ -5,8 +5,11 @@ import BlockCollection from '../../tetris/blockCollection';
 import ImageBlockContent from './imageBlockContent';
 import {createMatrix, getRandomInt} from '../../utils';
 
-const START_X = 0;
-const START_Y = 0;
+import WorldConstants from '../world/worldConstants';
+
+const START_X = WorldConstants.WINDOW_BOTTOM_RIGHT_X;
+const START_Y = WorldConstants.WINDOW_BOTTOM_RIGHT_Y;
+const BLOCK_WIDTH = WorldConstants.BLOCK_WIDTH;
 
 const getNewTetromino = function(blocks) {
     let blockCollection = new BlockCollection({blocks:blocks});
@@ -24,15 +27,19 @@ export default function TetrominoFactory(args) {
         
         let blocks = createMatrix(arrangement.length, arrangement[0].length);
 
+        let index = 0;
         for(var row = 0; row < arrangement.length; ++row) {
             for(var col = 0; col < arrangement[row].length; ++col) {
                 let newBlock;
                 if(arrangement[row][col]) {
-                    newBlock = getNewBlock();
+                    let x = START_X + BLOCK_WIDTH * col;
+                    let y = START_Y - BLOCK_WIDTH * row;
+                    newBlock = getNewBlock(x, y, tetrominoShape, index);
                 } else {
                     newBlock = null;
                 }
                 blocks[row][col] = newBlock;
+                ++index;
             }
         }
 
@@ -45,22 +52,22 @@ export default function TetrominoFactory(args) {
         return this.buildTetromino(getRandomShape());
     };
 
-    const getNewBlock = function() {
+    const getNewBlock = function(x,y, tetrominoShape, index) {
         return new Block({
             content: new ImageBlockContent({
-                image: gameObjectFactory.image(START_X, START_Y, 'tetromino', 0)
+                image: gameObjectFactory.image(x, y, tetrominoShape, index)
             })
         });
     }.bind(this);
 
-    const getRandomShape = function() {
+    this.getRandomShape = function() {
         return getRandomShapeRecurse(7);
-    }.bind(this);
+    }
 
     const getRandomShapeRecurse = function(bounds) {
         let random = getRandomInt(0, bounds);
         if(random == 7 || random == lastTetrominoIndex) {
-            return getRandomShape(7);
+            return this.getRandomShape(7);
         } else {
             lastTetrominoIndex = random;
             return TetrominoShape.values[random];

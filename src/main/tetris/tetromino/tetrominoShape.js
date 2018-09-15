@@ -1,12 +1,12 @@
 let arrangements = {};
 
-let iSymbol = Symbol.for("i");
-let jSymbol = Symbol.for("j");
-let lSymbol = Symbol.for("l");
-let oSymbol = Symbol.for("o");
-let sSymbol = Symbol.for("s");
-let tSymbol = Symbol.for("t");
-let zSymbol = Symbol.for("z");
+let iSymbol = 'I';
+let jSymbol = 'J';
+let lSymbol = 'L';
+let oSymbol = 'O';
+let sSymbol = 'S';
+let tSymbol = 'T';
+let zSymbol = 'Z';
 
 let values = [
     iSymbol,
@@ -22,9 +22,9 @@ arrangements[iSymbol] = [[true], [true], [true], [true]];
 arrangements[jSymbol] = [[false, true], [false, true], [true, true]];
 arrangements[lSymbol] = [[true, false], [true, false], [true, true]];
 arrangements[oSymbol] = [[true, true], [true, true]];
-arrangements[sSymbol] = [[false, true, true], [true, true, false]];
-arrangements[tSymbol] = [[true, true, true], [false, true, false]];
-arrangements[zSymbol] = [[true, true, false], [false, true, true]];
+arrangements[sSymbol] = [[true, false], [true, true], [false, true]];
+arrangements[tSymbol] = [[false, true,],[true, true], [false, true]];
+arrangements[zSymbol] = [[false, true], [true, true], [true, false]];
 
 export default Object.freeze({
     I: iSymbol,
