@@ -11,7 +11,7 @@ import Scenes from '../scenes';
 import RegistryFields from '../registryFields';
 import WorldConstants from '../world/worldConstants';
 
-const BUTTON_DELAY = 100;
+const BUTTON_DELAY = 150;
 
 let tetrisGame, blockRenderer;
 let counterclockwiseKey, clockwiseKey, leftKey, rightKey, downKey;
@@ -87,6 +87,7 @@ export default class PlayScene extends Phaser.Scene {
         blockRenderer = new BlockRenderer();
         throwAnimator = new ThrowAnimator({
             gameObjectFactory: this.add,
+            tweenManager: this.tweens,
             duration: 750
         });
 
@@ -117,7 +118,6 @@ export default class PlayScene extends Phaser.Scene {
     }
 
     throwingTetromino(tetrominoShape) {
-        throwAnimator.animateThrow(tetrominoShape);
-        console.log("help");
+        throwAnimator.animateThrow(tetrominoShape, () => tetrisGame.throwTetromino(tetrominoShape));
     }
 };

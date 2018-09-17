@@ -22,14 +22,16 @@ export default function TetrisGame(args) {
     let frameCount = 0;
 
     let gameOver = false;
+    let throwingTetromino = false;
 
     this.update = function() {
         if(gameOver) {
             return;
         }
 
-        if(!well.hasActiveTetromino()) {
-            throwTetromino();
+        if(!well.hasActiveTetromino() && !throwingTetromino) {
+            throwingTetromino = true;
+            emitThrowEvent();
             return;
         }
 
@@ -92,10 +94,14 @@ export default function TetrisGame(args) {
         }
     }.bind(this);
 
-    const throwTetromino = function() {
-        let tetrominoShape = tetrominoFactory.getRandomShape();
-        eventListener.throwingTetromino(tetrominoShape);
+    this.throwTetromino = function(tetrominoShape) {
         let tetromino = tetrominoFactory.buildTetromino(tetrominoShape);
         well.throwTetromino(tetromino);
+        throwingTetromino = false;
+    }
+
+    const emitThrowEvent = function() {
+        let tetrominoShape = tetrominoFactory.getRandomShape();
+        eventListener.throwingTetromino(tetrominoShape);
     }.bind(this);
 }

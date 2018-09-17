@@ -8,6 +8,7 @@ import MenuScene from './game/menu/menuScene';
 import WorldScene from './game/world/worldScene';
 
 import Scenes from './game/scenes';
+import GameConstants from './game/gameConstants';
 
 let preloadScene = new PreloadScene({active: true, key: Scenes.PRELOAD});
 let playScene = new PlayScene({active: false, key: Scenes.PLAY});
@@ -20,7 +21,8 @@ const config = {
     type: Phaser.AUTO,
     width: 600,
     height: 800,
-    scene: [ preloadScene, worldScene, playScene, scoreScene, menuScene, gameOverScene, ]
+    scene: [ preloadScene, worldScene, playScene, scoreScene, menuScene, gameOverScene, ],
+    fps: GameConstants.FPS
 };
 
 const game = new Phaser.Game(config);
