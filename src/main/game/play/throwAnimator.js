@@ -11,7 +11,7 @@ const END_Y = WorldConstants.WELL_TOP_LEFT_Y;
 let variableX = END_X;
 let variableY = START_Y;
 
-let points = [
+const points = [
     START_X, START_Y,
     variableX, variableY,   
     END_X, END_Y
@@ -20,11 +20,13 @@ let points = [
 export default function ThrowAnimator(args) {
 
     let {gameObjectFactory, duration} = args;
+    let curve = new Phaser.Curves.Spline(points);
 
-    this.animateThrow = function(tetrominoSprite) {
-        let curve = new Phaser.Curves.Spline(points);
+    this.animateThrow = function(tetrominoShape) {
 
-        let follower = gameObjectFactory.follower(curve, START_X, START_Y, tetrominoSprite);
+        let follower = gameObjectFactory.follower(curve, START_X, START_Y, tetrominoShape + 'Whole');
+
+        follower.setRotateToPath(true, 90);
 
         follower.startFollow({
             duration: duration,

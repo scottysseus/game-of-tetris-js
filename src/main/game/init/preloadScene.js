@@ -62,6 +62,7 @@ export default class PreloadScene extends Phaser.Scene {
 
         shapes.forEach(shapeName => {
             this.load.spritesheet(shapeName, filenameForShape(shapeName), { frameWidth: FRAME_SIZE, frameHeight: FRAME_SIZE });
+            this.load.image(shapeName + 'Whole', filenameForShape(shapeName));
         });
         loadFonts.call(this);
     }

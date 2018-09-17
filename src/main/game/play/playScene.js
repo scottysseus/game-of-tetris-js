@@ -5,6 +5,7 @@ import TetrisGame from '../../tetris/tetrisGame';
 import BlockRenderer from './blockRenderer';
 import HorizontalDirection from '../../tetris/direction/horizontalDirection';
 import RotationalDirection from '../../tetris/direction/rotationalDirection';
+import ThrowAnimator from './throwAnimator';
 
 import Scenes from '../scenes';
 import RegistryFields from '../registryFields';
@@ -16,6 +17,8 @@ let tetrisGame, blockRenderer;
 let counterclockwiseKey, clockwiseKey, leftKey, rightKey, downKey;
 
 let debugText;
+
+let throwAnimator;
 
 const initializeKeys = function() {
     let keyboardPlugin = this.input.keyboard;
@@ -82,6 +85,10 @@ export default class PlayScene extends Phaser.Scene {
 
     init() {
         blockRenderer = new BlockRenderer();
+        throwAnimator = new ThrowAnimator({
+            gameObjectFactory: this.add,
+            duration: 750
+        });
 
         initializeKeys.call(this);
     }
@@ -110,6 +117,7 @@ export default class PlayScene extends Phaser.Scene {
     }
 
     throwingTetromino(tetrominoShape) {
-
+        throwAnimator.animateThrow(tetrominoShape);
+        console.log("help");
     }
 };
