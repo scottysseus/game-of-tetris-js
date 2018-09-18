@@ -87,7 +87,6 @@ export default class PlayScene extends Phaser.Scene {
         blockRenderer = new BlockRenderer();
         throwAnimator = new ThrowAnimator({
             gameObjectFactory: this.add,
-            tweenManager: this.tweens,
             duration: 750
         });
 

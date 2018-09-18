@@ -43,7 +43,7 @@ export default function ThrowAnimator(args) {
 
         let follower = gameObjectFactory.follower(curve, START_X, START_Y, tetrominoShape + 'Whole');
 
-        follower.setRotateToPath(true, 90);
+        
 
         let angleDelta = 720 / (GameConstants.FPS * duration / 1000);
 
@@ -56,10 +56,6 @@ export default function ThrowAnimator(args) {
             onComplete: function() {
                 follower.destroy();
                 animationCompleteCallback();
-            },
-            onUpdate: function() {
-                console.log(angleDelta);
-                follower.texture.angle += angleDelta;
             }
         });
     }
