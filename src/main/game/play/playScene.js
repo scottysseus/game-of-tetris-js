@@ -11,10 +11,7 @@ import Scenes from '../scenes';
 import RegistryFields from '../registryFields';
 import WorldConstants from '../world/worldConstants';
 
-const BUTTON_DELAY = 150;
-
 let tetrisGame, blockRenderer;
-let counterclockwiseKey, clockwiseKey, leftKey, rightKey, downKey;
 
 let debugText;
 
@@ -22,34 +19,26 @@ let throwAnimator;
 
 const initializeKeys = function() {
     let keyboardPlugin = this.input.keyboard;
-    clockwiseKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.X);
-    counterclockwiseKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
-    leftKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-    rightKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-    downKey = keyboardPlugin.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-};
 
-const checkForInput = function() {
-    let keyboardPlugin = this.input.keyboard;
-    if(keyboardPlugin.checkDown(clockwiseKey, BUTTON_DELAY)) {
+    keyboardPlugin.on('keydown_X', () => {
         tetrisGame.rotateActiveTetromino(RotationalDirection.CLOCKWISE);
-    }
+    });
 
-    if(keyboardPlugin.checkDown(counterclockwiseKey, BUTTON_DELAY)) {
+    keyboardPlugin.on('keydown_Z', () => {
         tetrisGame.rotateActiveTetromino(RotationalDirection.COUNTERCLOCKWISE);
-    }
+    });
 
-    if(keyboardPlugin.checkDown(leftKey, BUTTON_DELAY)) {
+    keyboardPlugin.on('keydown_LEFT', () => {
         tetrisGame.shiftActiveTetromino(HorizontalDirection.LEFT);
-    }
+    });
 
-    if(keyboardPlugin.checkDown(rightKey, BUTTON_DELAY)) {
+    keyboardPlugin.on('keydown_RIGHT', () => {
         tetrisGame.shiftActiveTetromino(HorizontalDirection.RIGHT);
-    }
+    });
 
-    if(keyboardPlugin.checkDown(downKey, BUTTON_DELAY)) {
+    keyboardPlugin.on('keydown_DOWN', () => {
         tetrisGame.lowerActiveTetromino();
-    }
+    });
 };
 
 // for debug only
@@ -103,7 +92,6 @@ export default class PlayScene extends Phaser.Scene {
     }
 
     update() {
-        checkForInput.call(this);
         tetrisGame.update();
         blockRenderer.renderBlockCollection(WorldConstants.WELL_TOP_LEFT_X, WorldConstants.WELL_TOP_LEFT_Y, WorldConstants.BLOCK_WIDTH, tetrisGame.getWellGrid());
     }
