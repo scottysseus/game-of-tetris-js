@@ -73,6 +73,9 @@ export default class PlayScene extends Phaser.Scene {
     }
 
     init() {
+        const tetrominoFactory = new TetrominoFactory({gameObjectFactory: this.add});
+        tetrisGame = new TetrisGame({tetrominoFactory, eventListener: this});
+
         blockRenderer = new BlockRenderer();
         throwAnimator = new ThrowAnimator({
             gameObjectFactory: this.add,
@@ -87,8 +90,7 @@ export default class PlayScene extends Phaser.Scene {
     }
 
     create() {
-        const tetrominoFactory = new TetrominoFactory({gameObjectFactory: this.add});
-        tetrisGame = new TetrisGame({tetrominoFactory, eventListener: this});
+
     }
 
     update() {

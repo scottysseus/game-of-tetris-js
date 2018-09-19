@@ -7,8 +7,8 @@ import {createMatrix, getRandomInt} from '../../utils';
 
 import WorldConstants from '../world/worldConstants';
 
-const START_X = WorldConstants.WINDOW_BOTTOM_RIGHT_X;
-const START_Y = WorldConstants.WINDOW_BOTTOM_RIGHT_Y;
+const START_X = WorldConstants.WINDOW_BOTTOM_LEFT_X;
+const START_Y = WorldConstants.WINDOW_BOTTOM_LEFT_Y;
 const BLOCK_WIDTH = WorldConstants.BLOCK_WIDTH;
 
 const getNewTetromino = function(blocks) {
