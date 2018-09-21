@@ -1,15 +1,9 @@
-import RotationalDirection from "../direction/rotationalDirection"
-import {createMatrix} from "../../utils";
-import BlockCollection from "../blockCollection";
-
 export default function Tetromino(args) {
 
     let {blockCollection} = args;
 
     this.rotate = function(rotationalDirection) {
-        let tempBlocks = rotateBlocks(rotationalDirection);
-        rotateEachBlock(tempBlocks, rotationalDirection);
-        blockCollection = new BlockCollection({blocks: tempBlocks});
+        blockCollection.rotate(rotationalDirection);
     };
 
     this.height = blockCollection.height;
@@ -19,20 +13,7 @@ export default function Tetromino(args) {
     this.isEmptyBlock = blockCollection.isEmptyBlock;
 
     this.getRotatedIndex = function(row, col, rotationalDirection, numRotations) {
-        let newRow = row;
-        let newCol = col;
-        for(let i = 0; i < numRotations; ++i) {
-            let oldRow = newRow;
-            let oldCol = newCol;
-            if(rotationalDirection === RotationalDirection.CLOCKWISE) {
-                newRow = oldCol;
-                newCol = blockCollection.height() - 1 - oldRow;
-            } else {
-                newRow = blockCollection.width() - 1 - oldCol;
-                newCol = oldRow;
-            }
-        }
-        return [newRow, newCol];
+        return blockCollection.getRotatedIndex(row, col, rotationalDirection, numRotations);
     };
 
     this.getBlockCollection = function() {
@@ -44,30 +25,5 @@ export default function Tetromino(args) {
             return true;
         }
         return false;
-    };
-
-    let rotateBlocks = function(rotationalDirection) {
-        let height = blockCollection.height();
-        let width = blockCollection.width();
-        let tempBlocks = createMatrix(width, height);
-        for(let row = 0; row < height; ++row) {
-            for(let col = 0; col < width; ++col) {
-                let index = this.getRotatedIndex(row, col, rotationalDirection, 1);
-                tempBlocks[index[0]][index[1]] = blockCollection.get(row,col);
-            }
-        }
-        return tempBlocks;
-    }.bind(this);
-
-    let rotateEachBlock = function(blocks, rotationalDirection) {
-        for(let row = 0; row < blocks.length; ++row) {
-            for(let col = 0; col < blocks[0].length; ++col) {
-                let block = blocks[row][col];
-                if(block !== null && !block.isEmpty()) {
-                    blocks[row][col].rotate(rotationalDirection);
-                }
-            }
-        }
-    }.bind(this);
-
+    };    
 }

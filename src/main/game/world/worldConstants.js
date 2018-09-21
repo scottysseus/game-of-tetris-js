@@ -1,0 +1,9 @@
+export default Object.freeze({
+    WELL_TOP_LEFT_X: 0,
+    WELL_TOP_LEFT_Y: 250,
+    WELL_WIDTH: 300,
+    WELL_HEIGHT: 500,
+    BLOCK_WIDTH: 25,
+    WINDOW_BOTTOM_LEFT_X: 320,
+    WINDOW_BOTTOM_LEFT_Y: 225
+});

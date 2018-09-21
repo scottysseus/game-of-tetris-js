@@ -8,16 +8,23 @@
     "license": "MIT",
     "private": false,
     "scripts": {
-        "test": "jest"
+        "test": "jest",
+        "build-devw": "webpack --mode=development --watch",
+        "server": "http-server . -p 8080"
     },
     "devDependencies": {
-        "babel-core": "^6.26.2",
-        "babel-jest": "^22.4.3",
-        "babel-preset-env": "^1.6.1",
-        "jest": "^22.4.3",
-        "regenerator-runtime": "^0.11.1"
+        "@babel/core": "^7.0.0",
+        "@babel/preset-env": "^7.0.0",
+        "babel-core": "7.0.0-bridge.0",
+        "babel-jest": "^23.4.2",
+        "babel-loader": "^8.0.2",
+        "http-server": "^0.11.1",
+        "jest": "^23.5.0",
+        "regenerator-runtime": "^0.11.1",
+        "webpack": "^4.17.2",
+        "webpack-cli": "^3.1.0"
     },
     "dependencies": {
-        "phaser": "^3.6.0"
+        "phaser": "^3.12.0"
     }
 }

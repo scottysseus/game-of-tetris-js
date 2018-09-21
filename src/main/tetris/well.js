@@ -10,6 +10,14 @@ export default function Well(args) {
     this.contains = grid.contains;
     this.get = grid.get;
 
+    this.hasActiveTetromino = function() {
+        return activeTetromino !== null;
+    }
+
+    this.getActiveTetromino = function() {
+        return activeTetromino;
+    }
+
     this.throwTetromino = function(tetromino) {
         activeTetromino = tetromino;
         activeRow = 0;
@@ -91,11 +99,15 @@ export default function Well(args) {
 
     this.rotateActiveTetromino = function(circularDirection) {
         if(canRotate(circularDirection)) {
-            clearTetromino()
+            clearTetromino();
             activeTetromino.rotate(circularDirection);
             this.refreshActiveTetromino();
         }
     };
+
+    this.topIsTouched = function() {
+        return getRowCount(0) > 0;
+    }
 
     let willCollideVerically = function() {
         for(let col = 0; col < activeTetromino.width(); ++col) {
@@ -103,7 +115,7 @@ export default function Well(args) {
                 if(activeTetromino.isEmptyBlock(row, col)) {
                     continue;
                 }
-                if(grid.get(activeRow + row + 1, activeCol + col) !== null) {
+                if(!grid.isEmptyBlock(activeRow + row + 1, activeCol + col)) {
                     return true;
                 }
                 break;
@@ -146,9 +158,9 @@ export default function Well(args) {
                 let newIndex = activeTetromino.getRotatedIndex(row, col, circularDirection, 1);
                 let newRow = activeRow + newIndex[0];
                 let newCol = activeCol + newIndex[1];
-                if(!grid.columnInBounds(newCol) || grid.rowInBounds(newRow) || (
-                    !activeTetromino.contains(newIndex[0], newIndex[1]
-                    && !activeTetromino.isEmptyBlock(row, col))
+                if(!grid.columnInBounds(newCol) || !grid.rowInBounds(newRow) || (
+                    !activeTetromino.contains(newIndex[0], newIndex[1])
+                    && !activeTetromino.isEmptyBlock(row, col)
                     && !grid.isEmptyBlock(newRow, newCol)
                 )) {
                     return false;
@@ -178,10 +190,20 @@ export default function Well(args) {
         return itemsInRow;
     }.bind(this);
 
+    let clearRow = function(row) {
+        for(let col = 0; col < this.width(); ++col) {
+            grid.clear(row, col);
+        }
+    }.bind(this);
+
     let collapseRow = function(row) {
+        clearRow(row);
+        --row;
+        // recursively shift rows down by 1
         while(row > 0 && getRowCount(row) > 0) {
-            for(let col = 0; col < this.width(); ++col) {
-                grid.set(row, col, grid.get(row-1, col));
+            for(let col = 0; col < this.width(); ++col) {                
+                grid.set(row + 1, col, grid.get(row, col));
+                grid.set(row, col, null);
             }
             --row;
         }
