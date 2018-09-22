@@ -14,10 +14,10 @@ const instructions = 'Jaime Lannister is pushing Bran out the window! Due to \n'
                    + 'magic or something, they have been caught in a \n'
                    + 'life-or-death GAME OF TETRIS.\n\n\n'
                    + 'KEYS:\n' 
-                   + '<-    Shift tetromino to the LEFT\n' 
-                   + '->    Shift tetromino to the RIGHT\n'
-                   + 'Z     Rotate tetromino COUNTERCLOCKWISE\n'
-                   + 'X     Rotate tetromino CLOCKWISE';
+                   + '<-    Shift Bran to the LEFT\n' 
+                   + '->    Shift Bran to the RIGHT\n'
+                   + 'Z     Rotate Bran COUNTERCLOCKWISE\n'
+                   + 'X     Rotate Bran CLOCKWISE';
 
 let backButton;
 
