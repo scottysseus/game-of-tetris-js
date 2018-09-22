@@ -43,7 +43,7 @@ export default function Well(args) {
     };
 
     this.lowerActiveTetromino = function() {
-        if(hasActiveTetromino()) {
+        if(this.hasActiveTetromino()) {
             if(!activeTetrominoWillUnderflow() && !willCollideVerically()) {
                 clearTetromino();
                 activeRow++;
@@ -98,7 +98,7 @@ export default function Well(args) {
     };
 
     this.rotateActiveTetromino = function(circularDirection) {
-        if(hasActiveTetromino() && canRotate(circularDirection)) {
+        if(this.hasActiveTetromino() && canRotate(circularDirection)) {
             clearTetromino();
             activeTetromino.rotate(circularDirection);
             this.refreshActiveTetromino();
