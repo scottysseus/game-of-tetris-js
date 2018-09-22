@@ -4,6 +4,7 @@ import WorldConstants from '../world/worldConstants';
 
 const ASSETS_DIR = 'src/assets/';
 const IMG_DIR = ASSETS_DIR + 'img/';
+const SOUND_DIR = ASSETS_DIR + 'sound/';
 
 const FRAME_SIZE = WorldConstants.BLOCK_WIDTH;
 
@@ -60,6 +61,7 @@ export default class PreloadScene extends Phaser.Scene {
     preload() {
         this.load.image('background', IMG_DIR + 'background.png');
         this.load.spritesheet('jaime', IMG_DIR + 'jaime.png', {frameWidth: 84, frameHeight: 75});
+        this.load.audio('theme', SOUND_DIR + 'theme.mp3');
 
         shapes.forEach(shapeName => {
             this.load.spritesheet(shapeName, filenameForShape(shapeName), { frameWidth: FRAME_SIZE, frameHeight: FRAME_SIZE });
