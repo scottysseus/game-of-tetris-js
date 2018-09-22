@@ -4,5 +4,6 @@ export default Object.freeze({
     SCORE: 'score',
     GAME_OVER: 'gameOver',
     MENU: 'menu',
-    WORLD: 'world'
+    WORLD: 'world',
+    INSTRUCTIONS: 'instructions'
 });

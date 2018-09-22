@@ -6,8 +6,8 @@ const scoreX = 60;
 const scoreY = 60;
 
 const scoreStyle = {
-    fontSize: "24px",
-    color: "#FFFFFF",
+    fontSize: TextConstants.BODY_TEXT_SIZE,
+    color: TextConstants.PRIMARY_COLOR,
     fontFamily: TextConstants.FONT_FAMILY
 };
 
