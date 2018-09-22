@@ -59,6 +59,7 @@ export default class PreloadScene extends Phaser.Scene {
 
     preload() {
         this.load.image('background', IMG_DIR + 'background.png');
+        this.load.spritesheet('jaime', IMG_DIR + 'jaime.png', {frameWidth: 84, frameHeight: 75});
 
         shapes.forEach(shapeName => {
             this.load.spritesheet(shapeName, filenameForShape(shapeName), { frameWidth: FRAME_SIZE, frameHeight: FRAME_SIZE });

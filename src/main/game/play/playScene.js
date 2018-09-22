@@ -11,11 +11,13 @@ import Scenes from '../scenes';
 import RegistryFields from '../registryFields';
 import WorldConstants from '../world/worldConstants';
 
+import Animations from '../animations';
+
 let tetrisGame, blockRenderer;
 
 let debugText;
 
-let throwAnimator;
+let throwAnimator, jaime, jaimeAnimation;
 
 const initializeKeys = function() {
     let keyboardPlugin = this.input.keyboard;
@@ -76,10 +78,20 @@ export default class PlayScene extends Phaser.Scene {
         const tetrominoFactory = new TetrominoFactory({gameObjectFactory: this.add});
         tetrisGame = new TetrisGame({tetrominoFactory, eventListener: this});
 
+        jaime = this.add.sprite(375, 182, 'jaime', 0);
+        jaimeAnimation = this.anims.create({
+            key: Animations.THROW,
+            frames: this.anims.generateFrameNumbers('jaime', { start: 0, end: 2 }),
+            frameRate: 15,
+            repeat: 0,
+            yoyo: true
+        });
+
         blockRenderer = new BlockRenderer();
         throwAnimator = new ThrowAnimator({
             gameObjectFactory: this.add,
-            duration: 750
+            duration: 750,
+            thrower: jaime,
         });
 
         initializeKeys.call(this);
