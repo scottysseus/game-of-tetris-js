@@ -15,9 +15,11 @@ export default class MenuScene extends Phaser.Scene {
         super(args);
     }
 
+    init() {
+    
+    }
+
     create() {
-        this.sound.add('theme');
-        this.sound.play('theme');
         let centerX = this.game.canvas.width / 2;
         let centerY = this.game.canvas.height / 2;
 
@@ -38,6 +40,6 @@ export default class MenuScene extends Phaser.Scene {
             this.scene.get(Scenes.INSTRUCTIONS).scene.start();
             this.scene.stop();
         }.bind(this));
-
+        
     }
 }

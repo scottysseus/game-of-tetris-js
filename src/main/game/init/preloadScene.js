@@ -10,6 +10,8 @@ const FRAME_SIZE = WorldConstants.BLOCK_WIDTH;
 
 const loadFonts = function() {
     let callback = function() {
+        this.sound.add('theme');
+        this.sound.play('theme');
         this.scene.start(Scenes.WORLD);
         this.scene.start(Scenes.MENU);
     }
