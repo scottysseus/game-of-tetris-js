@@ -9,6 +9,8 @@ export function getTextOptions(fontsize) {
     return {
         fontSize: fontsize,
         color: TextConstants.PRIMARY_COLOR,
-        fontFamily: TextConstants.FONT_FAMILY
+        fontFamily: TextConstants.FONT_FAMILY,
+        stroke: TextConstants.OUTLINE_COLOR,
+        strokeThickness: 6
     }
 }

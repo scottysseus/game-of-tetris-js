@@ -33,6 +33,6 @@ export default class InstructionsScene extends Phaser.Scene {
         this.add.text(centerX, TextConstants.TITLE_Y, "INSTRUCTIONS", titleStyle).setOrigin(0.5, 0.5);
         backButton = getBackButton(this.add, Scenes.MENU, this);
 
-        this.add.text(TextConstants.MARGIN_X, TextConstants.MENU_OPTION_Y, instructions, instructionsStyle).setOrigin(0, 0.5);
+        this.add.text(TextConstants.MARGIN_X, TextConstants.MENU_OPTION_Y + 50, instructions, instructionsStyle).setOrigin(0, 0.5);
     }
 }
