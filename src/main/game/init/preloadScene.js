@@ -10,8 +10,6 @@ const FRAME_SIZE = WorldConstants.BLOCK_WIDTH;
 
 const loadFonts = function() {
     let callback = function() {
-        this.sound.add('theme');
-        this.sound.play('theme');
         this.scene.start(Scenes.WORLD);
         this.scene.start(Scenes.MENU);
     }
@@ -64,6 +62,7 @@ export default class PreloadScene extends Phaser.Scene {
         this.load.image('background', IMG_DIR + 'background.png');
         this.load.spritesheet('jaime', IMG_DIR + 'jaime.png', {frameWidth: 84, frameHeight: 75});
         this.load.audio('theme', SOUND_DIR + 'theme.mp3');
+        this.load.audio('castamere', SOUND_DIR + 'castamere.mp3');
 
         shapes.forEach(shapeName => {
             this.load.spritesheet(shapeName, filenameForShape(shapeName), { frameWidth: FRAME_SIZE, frameHeight: FRAME_SIZE });
