@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import GameScalePlugin from 'phaser-plugin-game-scale';
 
 import PlayScene from './game/play/playScene'
 import PreloadScene from './game/init/preloadScene';
@@ -24,7 +25,14 @@ const config = {
     width: 600,
     height: 800,
     scene: [ preloadScene, worldScene, playScene, scoreScene, menuScene, gameOverScene, instructionsScene, ],
-    fps: GameConstants.FPS
+    fps: GameConstants.FPS,
+    plugins: {
+        global: [{
+          key: 'GameScalePlugin',
+          plugin: GameScalePlugin,
+          mapping: 'gameScale'
+        }]
+      }
 };
 
 const game = new Phaser.Game(config);
