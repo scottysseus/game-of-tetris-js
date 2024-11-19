@@ -2,4 +2,4 @@
 
 Tetris with a _Game of Thrones_ flair.
 
-[> Play <](https://scottyseus.github.io/game-of-tetris-js/) 
+[> Play <](https://scottysseus.github.io/game-of-tetris-js/) 
